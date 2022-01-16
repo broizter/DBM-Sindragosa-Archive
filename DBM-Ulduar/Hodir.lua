@@ -27,7 +27,7 @@ local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 61968, nil, nil, nil, 2)
 local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
 local timerFlashFrCD		= mod:NewCDTimer(60, 61968, nil, nil, nil, 2)
-local timerAchieve			= mod:NewAchievementTimer(179, 3182)
+local timerAchieve			= mod:NewAchievementTimer(119, 3182)
 
 mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
 
