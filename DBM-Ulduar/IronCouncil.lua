@@ -12,7 +12,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 63490 62269 64321 61974 61869 63481",
 	"SPELL_AURA_APPLIED 61903 63493 62269 63490 62277 63967 64637 61888 63486 61887 61912 63494 63483 61915",
 	"SPELL_AURA_REMOVED 64637 61888 63483 61915 61912 63494",
-	"UNIT_DIED"
+	"UNIT_DIED",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 
@@ -135,11 +136,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(63490, 62269) then		-- Rune of Death
-		warnRuneofDeath:Show()
-		timerRuneofDeath:Start()
-		warnRuneofDeathIn10Sec:Schedule(20)
-	elseif args:IsSpellID(64321, 61974) then	-- Rune of Power
+	if args:IsSpellID(64321, 61974) then	-- Rune of Power
 		self:BossTargetScanner(32927, "RuneTarget", 0.1, 16, true, true)--Scan only boss unitIDs, scan only hostile targets
 		timerRuneofPower:Start()
 	elseif args:IsSpellID(61869, 63481) then	-- Overload
@@ -153,6 +150,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 			DBM.RangeCheck:SetBossRange(20, self:GetBossUnitByCreatureId(32857))
 			self:Schedule(6.5, ResetRange, self)
 		end
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == "Decipher this!" then
+		warnRuneofDeath:Show()
+		timerRuneofDeath:Start()
+		warnRuneofDeathIn10Sec:Schedule(20)
 	end
 end
 
