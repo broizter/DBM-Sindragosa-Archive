@@ -38,7 +38,7 @@ local timerSaroniteVapors		= mod:NewNextCountTimer(30, 63322, nil, nil, nil, 5)
 local timerShadowCrashCD		= mod:NewCDTimer(9, 62660, nil, "Ranged", nil, 3)
 local timerLifeLeech			= mod:NewTargetTimer(10, 63276, nil, false, 2, 3)
 local timerLifeLeechCD			= mod:NewCDTimer(20.4, 63276, nil, nil, nil, 3)
-local timerHardmode				= mod:NewTimer(189, "hardmodeSpawn", nil, nil, nil, 1)
+local timerHardmode				= mod:NewTimer(249, "hardmodeSpawn", nil, nil, nil, 1)
 
 mod:AddSetIconOption("SetIconOnShadowCrash", 62660, true, false, {8})
 mod:AddSetIconOption("SetIconOnLifeLeach", 63276, true, false, {7})
