@@ -31,10 +31,12 @@ local timerStompCD		= mod:NewCDTimer(31, 45185, nil, nil, nil, 2)
 local timerBurn			= mod:NewTargetTimer(60, 46394, nil, "false", 2, 3)
 local timerBurnCD		= mod:NewCDTimer(20, 46394, nil, nil, nil, 3)
 
-local berserkTimer		= mod:NewBerserkTimer(mod:IsHeroic() and 300 or 360)
+local berserkTimer		= mod:NewBerserkTimer(mod:IsTimewalking() and 300 or 360)
 
 mod:AddSetIconOption("BurnIcon", 46394, true, false, {1, 2, 3, 4, 5, 6, 7, 8})
 mod:AddRangeFrameOption(4, 46394)
+mod:AddMiscLine(DBM_CORE_L.OPTION_CATEGORY_DROPDOWNS)
+mod:AddDropdownOption("RangeFrameActivation", {"AlwaysOn", "OnDebuff"}, "OnDebuff", "misc")
 
 mod.vb.burnIcon = 8
 local debuffName = DBM:GetSpellInfo(46394)
@@ -51,6 +53,9 @@ function mod:OnCombatStart(delay)
 	timerBurnCD:Start(-delay)
 	timerStompCD:Start(-delay)
 	berserkTimer:Start(-delay)
+	if self.Options.RangeFrame and self.Options.RangeFrameActivation == "AlwaysOn" then
+		DBM.RangeCheck:Show(4)
+	end
 end
 
 function mod:OnCombatEnd()
@@ -79,7 +84,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnBurn:Play("targetyou")
 			yellBurn:Yell()
 		end
-		if self.Options.RangeFrame then
+		if self.Options.RangeFrame and self.Options.RangeFrameActivation == "OnDebuff" then
 			if DBM:UnitDebuff("player", args.spellName) then--You have debuff, show everyone
 				DBM.RangeCheck:Show(4, nil)
 			else--You do not have debuff, only show players who do
@@ -96,7 +101,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerStompCD:Start()
 	elseif args.spellId == 45150 and args:IsPlayer() then
 		local amount = args.amount or 1
-		if (amount >= 4) or (amount >= 2 and self:IsHeroic()) then
+		if (amount >= 4) or (amount >= 2 and self:IsTimewalking()) then
 			specWarnMeteor:Show(amount)
 			specWarnMeteor:Play("stackhigh")
 		end

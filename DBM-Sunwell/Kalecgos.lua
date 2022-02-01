@@ -7,6 +7,10 @@ mod:SetCreatureID(24850)
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEvents(
+	"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
+)
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 44799",
 	"SPELL_CAST_SUCCESS 45018",
@@ -29,11 +33,13 @@ local timerBuffetCD		= mod:NewCDTimer(8, 45018, nil, nil, nil, 2)
 local timerPorted		= mod:NewBuffActiveTimer(60, 46021, nil, nil, nil, 6)
 local timerExhausted	= mod:NewBuffActiveTimer(60, 44867, nil, nil, nil, 6)
 
-if mod:IsHeroic() then
-	local berserkTimer	= mod:NewBerserkTimer(300) -- Doesn't exist on retail
+local berserkTimer
+if mod:IsTimewalking() then
+	berserkTimer		= mod:NewBerserkTimer(300) -- Doesn't exist on retail
 end
 
 mod:AddRangeFrameOption("12")
+mod:AddBoolOption("ShowRespawn", true)
 mod:AddBoolOption("ShowFrame", true)
 mod:AddBoolOption("FrameLocked", false)
 mod:AddBoolOption("FrameClassColor", true, nil, function()
@@ -48,6 +54,9 @@ mod.vb.portCount = 1
 
 function mod:OnCombatStart(delay)
 	self.vb.portCount = 1
+	if self:IsTimewalking() then
+		berserkTimer:Start(-delay)
+	end
 	if self.Options.ShowFrame then
 		Kal:CreateFrame()
 	end
@@ -149,5 +158,11 @@ function mod:UNIT_DIED(args)
 			grp = 0
 		end
 		Kal:RemoveEntry(("%s (%d)"):format(args.destName, grp or 0))
+	end
+end
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	if self:IsInCombat() and not UnitExists("boss1") and self.Options.ShowRespawn then
+		DBM.Bars:CreateBar(30, DBM_CORE_L.TIMER_RESPAWN:format(L.name), "Interface\\Icons\\Spell_Holy_BorrowedTime")
 	end
 end
