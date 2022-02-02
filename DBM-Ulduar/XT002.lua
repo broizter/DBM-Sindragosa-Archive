@@ -24,7 +24,7 @@ local specWarnGravityBomb			= mod:NewSpecialWarningMoveAway(64234, nil, nil, nil
 local yellGravityBomb				= mod:NewYell(64234)
 local specWarnConsumption			= mod:NewSpecialWarningMove(64206, nil, nil, nil, 1, 2)--Hard mode void zone dropped by Gravity Bomb
 
-local enrageTimer					= mod:NewBerserkTimer(360)
+local enrageTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrumCast		= mod:NewCastTimer(62776)
 local timerTympanicTantrum			= mod:NewBuffActiveTimer(12, 62776, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerTympanicTantrumCD		= mod:NewCDTimer(60, 62776, nil, nil, nil, 2, nil, DBM_CORE_L.HEALER_ICON, nil, 3)
