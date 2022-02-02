@@ -6,27 +6,33 @@ mod:SetCreatureID(15932)
 
 mod:RegisterCombat("combat")
 
+mod:EnableModel()
+
 mod:RegisterEventsInCombat(
-	"SPELL_DAMAGE 28375 54426"
+	"SPELL_DAMAGE 28375"
 )
 
---TODO, is it really necessary to use SPELL_DAMAGE here?
-local warnDecimateSoon	= mod:NewSoonAnnounce(28374, 2)
-local warnDecimateNow	= mod:NewSpellAnnounce(28374, 3)
+local warnDecimateSoon	= mod:NewSoonAnnounce(54426, 2)
+local warnDecimateNow	= mod:NewSpellAnnounce(54426, 3)
 
 local enrageTimer		= mod:NewBerserkTimer(420)
-local timerDecimate		= mod:NewCDTimer(104, 28374, nil, nil, nil, 2)
+local timerDecimate		= mod:NewCDTimer(104, 54426, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)
-	enrageTimer:Start(420 - delay)
-	timerDecimate:Start(110 - delay)
-	warnDecimateSoon:Schedule(100 - delay)
+	local subZone = GetSubZoneText()
+	if subZone ~= "The Halls of Reanimation" then -- Fix for Gluth timers showing on Thaddius pull
+		enrageTimer:Start(420 - delay)
+		timerDecimate:Start(105 - delay)
+		warnDecimateSoon:Schedule(95 - delay)
+	end
 end
 
 function mod:SPELL_DAMAGE(_, _, _, _, _, _, spellId)
-	if spellId == 28375 or spellId == 54426 and self:AntiSpam(20) then
+	if spellId == 28375 and self:AntiSpam(20) then
 		warnDecimateNow:Show()
-		timerDecimate:Start()
-		warnDecimateSoon:Schedule(96)
+		timerDecimate:Start(60)
+		warnDecimateSoon:Schedule(50)
 	end
 end
+
+

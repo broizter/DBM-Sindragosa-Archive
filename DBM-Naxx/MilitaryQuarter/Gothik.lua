@@ -6,21 +6,20 @@ mod:SetCreatureID(16060)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
+mod:RegisterEvents(
 	"UNIT_DIED"
 )
 
 local warnWaveNow		= mod:NewAnnounce("WarningWaveSpawned", 3, nil, false)
-local warnWaveSoon		= mod:NewAnnounce("WarningWaveSoon", 2)
+local warnWaveSoon		= mod:NewAnnounce("WarningWaveSoon", 1)
 local warnRiderDown		= mod:NewAnnounce("WarningRiderDown", 4)
 local warnKnightDown	= mod:NewAnnounce("WarningKnightDown", 2)
-local warnPhase2		= mod:NewPhaseAnnounce(2, 3)
+local warnPhase2		= mod:NewPhaseAnnounce(2, 4)
 
-local timerPhase2		= mod:NewTimer(275, "TimerPhase2", 27082, nil, nil, 6)
-local timerWave			= mod:NewTimer(20, "TimerWave", 5502, nil, nil, 1)
-local timerGate			= mod:NewTimer(205, "Gate Opens", 9484)
+local timerPhase2		= mod:NewTimer(270, "TimerPhase2", 27082) -- old 275
+local timerWave			= mod:NewTimer(20, "TimerWave", 27082)
+local timerGate     = mod:NewTimer(150, "Gate Opens", 9484) -- old 205
 
-mod.vb.wave = 0
 local wavesNormal = {
 	{2, L.Trainee, next = 20},
 	{2, L.Trainee, next = 20},
@@ -66,10 +65,7 @@ local wavesHeroic = {
 
 
 local waves = wavesNormal
-
-local function StartPhase2(self)
-	self:SetStage(2)
-end
+local wave = 0
 
 local function getWaveString(wave)
 	local waveInfo = waves[wave]
@@ -82,48 +78,44 @@ local function getWaveString(wave)
 	end
 end
 
-function mod:NextWave()
-	self.vb.wave = self.vb.wave + 1
-	warnWaveNow:Show(self.vb.wave, getWaveString(self.vb.wave))
-	local next = waves[self.vb.wave].next
-	if next then
-		timerWave:Start(next, self.vb.wave + 1)
-		warnWaveSoon:Schedule(next - 3, self.vb.wave + 1, getWaveString(self.vb.wave + 1))
-		self:ScheduleMethod(next, "NextWave")
-	end
-end
-
 function mod:OnCombatStart(delay)
-	self:SetStage(1)
-	if self:IsDifficulty("normal25") then
+	if mod:IsDifficulty("heroic25") then
 		waves = wavesHeroic
 	else
 		waves = wavesNormal
 	end
-	self.vb.wave = 0
+	wave = 0
 	timerGate:Start()
 	timerPhase2:Start()
-	warnPhase2:Schedule(270)
-	timerWave:Start(25, self.vb.wave + 1)
-	warnWaveSoon:Schedule(22, self.vb.wave + 1, getWaveString(self.vb.wave + 1))
+	self:ScheduleMethod(269, "StartPhase2")
+	warnPhase2:Schedule(265)
+	timerWave:Start(25, wave + 1)
+	warnWaveSoon:Schedule(22, wave + 1, getWaveString(wave + 1))
 	self:ScheduleMethod(25, "NextWave")
-	self:Schedule(274, StartPhase2, self)
+	self:SetStage(1)
 end
 
-function mod:OnTimerRecovery()
-	if self:IsDifficulty("normal25") then
-		waves = wavesHeroic
-	else
-		waves = wavesNormal
+function mod:StartPhase2()
+	self:SetStage(2)
+end
+
+function mod:NextWave()
+	wave = wave + 1
+	warnWaveNow:Show(wave, getWaveString(wave))
+	local next = waves[wave].next
+	if next then
+		timerWave:Start(next, wave + 1)
+		warnWaveSoon:Schedule(next - 3, wave + 1, getWaveString(wave + 1))
+		self:ScheduleMethod(next, "NextWave")
 	end
 end
 
 function mod:UNIT_DIED(args)
 	if bit.band(args.destGUID:sub(0, 5), 0x00F) == 3 then
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 16126 then -- Unrelenting Rider
+		local guid = tonumber(args.destGUID:sub(9, 12), 16)
+		if guid == 16126 then -- Unrelenting Rider
 			warnRiderDown:Show()
-		elseif cid == 16125 then -- Unrelenting Deathknight
+		elseif guid == 16125 then -- Unrelenting Deathknight
 			warnKnightDown:Show()
 		end
 	end

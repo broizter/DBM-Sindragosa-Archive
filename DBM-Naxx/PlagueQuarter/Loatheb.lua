@@ -4,15 +4,16 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision(("$Revision: 2568 $"):sub(12, -3))
 mod:SetCreatureID(16011)
 
-mod:RegisterCombat("combat")--Maybe change to a yell later so pull detection works if you chain pull him from tash gauntlet
+mod:RegisterCombat("combat")
 
 mod:EnableModel()
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 29234 29204 55052 55593",
+mod:RegisterEvents(
+	"SPELL_CAST_SUCCESS",
 	"SPELL_DAMAGE",
 	"SWING_DAMAGE",
-	"UNIT_DIED"
+	"SPELL_SUMMON",
+	"SPELL_AURA_APPLIED"
 )
 
 local warnSporeNow	= mod:NewSpellAnnounce(32329, 2)
@@ -21,46 +22,62 @@ local warnDoomNow	= mod:NewSpellAnnounce(29204, 3)
 local warnHealSoon	= mod:NewAnnounce("WarningHealSoon", 4, 48071)
 local warnHealNow	= mod:NewAnnounce("WarningHealNow", 1, 48071, false)
 
-local timerSpore	= mod:NewNextTimer(36, 32329, nil, nil, nil, 5, 42524, DBM_CORE_L.DAMAGE_ICON)
-local timerDoom		= mod:NewNextTimer(180, 29204, nil, nil, nil, 2)
-local timerAura		= mod:NewBuffActiveTimer(17, 55593, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
+
+local timerSpore	= mod:NewNextTimer(12, 32329)
+local timerDoom		= mod:NewNextTimer(30, 29204)
+local timerAura		= mod:NewBuffActiveTimer(17, 55593)
 
 mod:AddBoolOption("SporeDamageAlert", false)
 
-mod.vb.doomCounter	= 0
-mod.vb.sporeTimer	= 36
+local doomCounter	= 0
 
 function mod:OnCombatStart(delay)
-	self.vb.doomCounter = 0
-	if self:IsDifficulty("normal25") then
-		self.vb.sporeTimer = 18
-	else
-		self.vb.sporeTimer = 36
+	local subZone = GetSubZoneText()
+	if subZone == "The Necrotic Vault" then -- Fix for Loatheb timers appearing on other bosses
+		doomCounter = 0
+		timerSpore:Start(-delay)
+		warnSporeSoon:Schedule(7-delay)
+		timerDoom:Start(30 - delay, doomCounter + 1)
 	end
-	timerSpore:Start(self.vb.sporeTimer - delay)
-	warnSporeSoon:Schedule(self.vb.sporeTimer - 5 - delay)
-	timerDoom:Start(120 - delay, self.vb.doomCounter + 1)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 29234 then
-		timerSpore:Start(self.vb.sporeTimer)
+	--[[
+	if args:IsSpellID(29234) then
+		timerSpore:Start(12)
 		warnSporeNow:Show()
-		warnSporeSoon:Schedule(self.vb.sporeTimer - 5)
-	elseif args:IsSpellID(29204, 55052) then  -- Inevitable Doom
-		self.vb.doomCounter = self.vb.doomCounter + 1
-		local timer = 30
-		if self.vb.doomCounter >= 7 then
-			if self.vb.doomCounter % 2 == 0 then timer = 17
-			else timer = 12 end
-		end
-		warnDoomNow:Show(self.vb.doomCounter)
-		timerDoom:Start(timer, self.vb.doomCounter + 1)
-	elseif spellId == 55593 then
+		warnSporeSoon:Schedule(sporeTimer - 5)
+	end
+	]]
+	if args:IsSpellID(29204, 55052) then  -- Inevitable Doom
+		doomCounter = doomCounter + 1
+		warnDoomNow:Show(doomCounter)
+		timerDoom:Start(30, doomCounter + 1)
+	--[[
+	elseif args:IsSpellID(55593) then -- Necrotic aura
 		timerAura:Start()
 		warnHealSoon:Schedule(14)
 		warnHealNow:Schedule(17)
+	]]
+	end
+end
+
+-- No SPELL_CAST_SUCCESS on this server for Necrotic Aura,
+-- only SPELL_AURA_APPLIED and SPELL_AURA_REMOVED
+function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpellID(55593) and args:IsPlayer() then -- Necrotic aura
+		timerAura:Start()
+		warnHealSoon:Schedule(14)
+		warnHealNow:Schedule(17)
+	end
+end
+
+-- SPELL_SUMMON for spore on this server
+function mod:SPELL_SUMMON(args)
+	if args:IsSpellID(29234) then
+		timerSpore:Start()
+		warnSporeNow:Show()
+		warnSporeSoon:Schedule(7)
 	end
 end
 
@@ -76,16 +93,5 @@ function mod:SWING_DAMAGE(_, sourceName, _, _, destName, _, _, _, _, amount)
 	if self.Options.SporeDamageAlert and destName == "Spore" and self:IsInCombat() then
 		SendChatMessage(sourceName..", You are damaging a Spore!!! ("..amount.." damage)", "RAID_WARNING")
 		SendChatMessage(sourceName..", You are damaging a Spore!!! ("..amount.." damage)", "WHISPER", nil, sourceName)
-	end
-end
-
---because in all likelyhood, pull detection failed (cause 90s like to chargein there trash and all and pull it
---We unschedule the pre warnings on death as a failsafe
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 16011 then
-		warnSporeSoon:Cancel()
-		warnHealSoon:Cancel()
-		warnHealNow:Cancel()
 	end
 end

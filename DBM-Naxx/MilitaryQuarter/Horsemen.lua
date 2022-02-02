@@ -1,48 +1,59 @@
 local mod	= DBM:NewMod("Horsemen", "DBM-Naxx", 4)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4909 $"):sub(12, -3))
+mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
 mod:SetCreatureID(16063, 16064, 16065, 30549)
 
-mod:RegisterCombat("combat", 16063, 16064, 16065, 30549)
+mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 28884 57467",
-	"SPELL_CAST_SUCCESS 28832 28833 28834 28835 28883 53638 57466 32455",
-	"SPELL_AURA_APPLIED_DOSE 28832 28833 28834 28835",
+mod:EnableModel()
+
+mod:RegisterEvents(
+	"SPELL_CAST_SUCCESS",
+	"SPELL_CAST_START",
+	"SPELL_AURA_APPLIED_DOSE",
+	"SPELL_AURA_APPLIED",
 	"UNIT_DIED"
 )
 
---TODO, first marks
-local warnMarkSoon				= mod:NewAnnounce("WarningMarkSoon", 1, 28835, false)
-local warnMeteor				= mod:NewSpellAnnounce(57467, 4)
+local warnMarkSoon			= mod:NewAnnounce("WarningMarkSoon", 1, 28835, false)
+local warnMarkNow			= mod:NewAnnounce("WarningMarkNow", 2, 28835)
+local holyWrathCD     		= mod:NewCDTimer(13, 57466, nil, nil, nil, 3)
 
-local specWarnMarkOnPlayer		= mod:NewSpecialWarning("SpecialWarningMarkOnPlayer", nil, nil, nil, 1, 6)
+local LADY_MARK = 28833
+local ZELIEK_MARK = 28835
+local BARON_MARK = 28834
+local THANE_MARK = 28832
 
-local timerLadyMark				= mod:NewNextTimer(16, 28833)
-local NextZeliekMark			= mod:NewNextTimer(16, 28835)
-local NextBaronMark				= mod:NewNextTimer(15, 28834)
-local NextThaneMark				= mod:NewNextTimer(15, 28832)
-local holyWrathCD				= mod:NewCDTimer(13, 57466)
+local NextLadyMark			= mod:NewNextTimer(12, LADY_MARK)
+local NextZeliekMark		= mod:NewNextTimer(12, ZELIEK_MARK)
+local NextBaronMark			= mod:NewNextTimer(10, BARON_MARK)
+local NextThaneMark			= mod:NewNextTimer(10, THANE_MARK)
 
-mod:AddRangeFrameOption("12")
+local meteorCD				= mod:NewCDTimer(15, 57467, nil, nil, nil, 2)
+
+local specWarnMarkOnPlayer	= mod:NewSpecialWarning("SpecialWarningMarkOnPlayer", nil, false, true)
+
+mod:AddBoolOption("HealthFrame", true)
+mod:AddBoolOption("RangeFrame")
 
 mod:SetBossHealthInfo(
-	16064, L.Korthazz,	-- Thane
-	30549, L.Rivendare,	-- Baron
-	16065, L.Blaumeux,	-- Lady
-	16063, L.Zeliek		-- Zeliek
+	16064, L.Korthazz,
+	30549, L.Rivendare,
+	16065, L.Blaumeux,
+	16063, L.Zeliek
 )
 
-mod.vb.markCounter = 0
+local markCounter = 0
 
 function mod:OnCombatStart(delay)
-	self.vb.markCounter = 0
-	timerLadyMark:Start()
-	NextZeliekMark:Start()
-	NextBaronMark:Start()
-	NextThaneMark:Start()
-	warnMarkSoon:Schedule(12)
+	self.combat_start = GetTime()
+	markCounter = 0
+	NextLadyMark:Start(34)
+	NextZeliekMark:Start(34)
+	NextBaronMark:Start(34)
+	NextThaneMark:Start(34)
+
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(12)
 	end
@@ -54,37 +65,60 @@ function mod:OnCombatEnd()
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(28884, 57467) then
-		warnMeteor:Show()
+local markSpam = 0
+
+function mod:SPELL_AURA_APPLIED(args)
+	self:DoMarks(args)
+end
+
+function mod:DoMarks(args)
+	local wasMark = false
+	if args:IsSpellID(LADY_MARK) then
+		wasMark = true
+		NextLadyMark:Start(15)
+	elseif args:IsSpellID(ZELIEK_MARK) then
+		wasMark = true
+		NextZeliekMark:Start(15)
+	elseif args:IsSpellID(BARON_MARK) then
+		wasMark = true
+		NextBaronMark:Start(12)
+	elseif args:IsSpellID(THANE_MARK) then
+		wasMark = true
+		NextThaneMark:Start(12)
 	end
+
+	if wasMark and (GetTime() - markSpam) > 5 then
+		markSpam = GetTime()
+		markCounter = markCounter + 1
+	end
+
+	return wasMark
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if args:IsSpellID(28832, 28833, 28834, 28835) and self:AntiSpam(5) then
-		self.vb.markCounter = self.vb.markCounter + 1
-		if spellId == 28833 then -- Lady Mark
-			timerLadyMark:Start(15)
-		elseif spellId == 28835 then -- Zeliek Mark
-			NextZeliekMark:Start(15)
-		elseif spellId == 28834 then -- Barok Mark
-			NextBaronMark:Start()
-		elseif spellId == 28832 then -- Thane Mark
-			NextThaneMark:Start()
-		end
-		warnMarkSoon:Schedule(12)
-	elseif args:IsSpellID(28883, 53638, 57466, 32455) then
+	if args:IsSpellID(28883, 53638, 57466, 32455) then
 		holyWrathCD:Start()
 	end
 end
 
+-- Still 15s timer on next meteor when he skips one (usually on tank swaps)
+function mod:MeteorCast()
+	self:UnscheduleMethod("MeteorCast")
+	meteorCD:Cancel()
+	meteorCD:Start()
+	self:ScheduleMethod(15, "MeteorCast")
+end
+
+function mod:SPELL_CAST_START(args)
+	if args:IsSpellID(28884, 57467) then
+		self:MeteorCast()
+	end
+end
+
 function mod:SPELL_AURA_APPLIED_DOSE(args)
-	if args:IsSpellID(28832, 28833, 28834, 28835) and args:IsPlayer() then
-		local amount = args.amount or 1
-		if amount >= 4 then
-			specWarnMarkOnPlayer:Show(args.spellName, amount)
-			specWarnMarkOnPlayer:Play("stackhigh")
+	if self:DoMarks(args) and args:IsPlayer() then
+		if args.amount >= 3 then
+			specWarnMarkOnPlayer:Show(args.spellName, args.amount)
 		end
 	end
 end
@@ -93,10 +127,12 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 16064 then
 		NextThaneMark:Cancel()
+		meteorCD:Cancel()
+		self:UnscheduleMethod("MeteorCast")
 	elseif cid == 30549 then
 		NextBaronMark:Cancel()
 	elseif cid == 16065 then
-		timerLadyMark:Cancel()
+		NextLadyMark:Cancel()
 	elseif cid == 16063 then
 		NextZeliekMark:Cancel()
 	end

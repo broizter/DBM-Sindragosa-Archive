@@ -4,28 +4,39 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 2869 $"):sub(12, -3))
 mod:SetCreatureID(15928)
---mod:RegisterCombat("combat_yell", L.Yell)
+
 mod:RegisterCombat("yell", L.Yell)
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 28089",
+mod:EnableModel()
+
+mod:RegisterEvents(
+	"SPELL_CAST_START",
 	"CHAT_MSG_RAID_BOSS_EMOTE",
-	"UNIT_AURA player"
+	"UNIT_AURA",
+	"SPELL_CAST_SUCCESS",
+	"UNIT_DIED"
 )
 
-local warnShiftSoon			= mod:NewPreWarnAnnounce(28089, 5, 3)
-local warnShiftCasting		= mod:NewCastAnnounce(28089, 4)
+local warnShiftCasting		= mod:NewCastAnnounce(28089, 3)
 local warnChargeChanged		= mod:NewSpecialWarning("WarningChargeChanged")
 local warnChargeNotChanged	= mod:NewSpecialWarning("WarningChargeNotChanged", false)
 local warnThrow				= mod:NewSpellAnnounce(28338, 2)
 local warnThrowSoon			= mod:NewSoonAnnounce(28338, 1)
 
-local enrageTimer			= mod:NewBerserkTimer(365)
-local timerNextShift		= mod:NewNextTimer(30, 28089, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
-local timerShiftCast		= mod:NewCastTimer(3, 28089, nil, nil, nil, 2)
-local timerThrow			= mod:NewNextTimer(20.6, 28338, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local enrageTimer			= mod:NewBerserkTimer(360)
+local timerNextShift		= mod:NewNextTimer(25, 28089)
+local timerShiftCast		= mod:NewCastTimer(3, 28089)
+local timerThrow			= mod:NewNextTimer(25.6, 28338)
 
-mod:AddDropdownOption("ArrowsEnabled", {"Never", "TwoCamp", "ArrowsRightLeft", "ArrowsInverse"}, "Never", "misc")
+local timerStomp			= mod:NewCDTimer(10, 45185, nil, nil, nil, 3) -- Custom stomp for Sindragosa realm
+
+local soundShiftWarn		= mod:NewSound(28089)
+local soundShift3			= mod:NewSound3(28089)
+
+mod:AddBoolOption("ArrowsEnabled", false, "Arrows")
+mod:AddBoolOption("ArrowsRightLeft", false, "Arrows")
+mod:AddBoolOption("ArrowsInverse", false, "Arrows")
+mod:AddBoolOption("HealthFrame", true)
 
 mod:SetBossHealthInfo(
 	15930, L.Boss1,
@@ -39,29 +50,37 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	currentCharge = nil
 	down = 0
-	self:ScheduleMethod(20.6 - delay, "TankThrow")
+	self:ScheduleMethod(25.6 - delay, "TankThrow")
 	timerThrow:Start(-delay)
-	warnThrowSoon:Schedule(17.6 - delay)
+	warnThrowSoon:Schedule(22.6 - delay)
 end
 
 local lastShift = 0
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 28089 then
+	if args:IsSpellID(28089) then
 		self:SetStage(2)
 		timerNextShift:Start()
+		soundShift3:Schedule(22)
 		timerShiftCast:Start()
+		soundShiftWarn:Play("Interface\\AddOns\\DBM-Core\\sounds\\beware.ogg")
 		warnShiftCasting:Show()
-		warnShiftSoon:Schedule(25)
 		lastShift = GetTime()
 	end
 end
 
-function mod:UNIT_AURA()
+-- Custom Stomp ability
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(45185) then
+		timerStomp:Start()
+	end
+end
+
+function mod:UNIT_AURA(elapsed)
 	if self.vb.phase ~= 2 or (GetTime() - lastShift) > 5 or (GetTime() - lastShift) < 3 then return end
 	local charge
 	local i = 1
-	while DBM:UnitDebuff("player", i) do
-		local _, _, icon, count = DBM:UnitDebuff("player", i)
+	while UnitDebuff("player", i) do
+		local _, _, icon, count = UnitDebuff("player", i)
 		if icon == "Interface\\Icons\\Spell_ChargeNegative" then
 			if count > 1 then return end
 			charge = L.Charge1
@@ -75,25 +94,30 @@ function mod:UNIT_AURA()
 		lastShift = 0
 		if charge == currentCharge then
 			warnChargeNotChanged:Show()
-			if self.Options.ArrowsEnabled == "ArrowsInverse" then
-				self:ShowLeftArrow()
-			elseif self.Options.ArrowsEnabled == "ArrowsRightLeft" then
-				self:ShowRightArrow()
+			if self.Options.ArrowsEnabled and self.Options.ArrowsRightLeft then
+				if self.Options.ArrowsInverse then
+					self:ShowLeftArrow()
+				else
+					self:ShowRightArrow()
+				end
 			end
 		else
 			warnChargeChanged:Show(charge)
-			if self.Options.ArrowsEnabled == "ArrowsInverse" then
-				self:ShowRightArrow()
-			elseif self.Options.ArrowsEnabled == "ArrowsRightLeft" then
-				self:ShowLeftArrow()
-			elseif self.Options.ArrowsEnabled == "TwoCamp" then
-				self:ShowUpArrow()
+			if self.Options.ArrowsEnabled then
+				if self.Options.ArrowsRightLeft and self.Options.ArrowsInverse then
+					self:ShowRightArrow()
+				elseif self.Options.ArrowsRightLeft then
+					self:ShowLeftArrow()
+				elseif currentCharge then
+					self:ShowUpArrow()
+				end
 			end
 		end
 		currentCharge = charge
 	end
 end
 
+-- Emote not fired on this server, UNIT_DIED on Tesla Coil is a workaround
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg:match(L.Emote) or msg:match(L.Emote2) or msg:find(L.Emote) or msg:find(L.Emote2) or msg == L.Emote or msg == L.Emote2 then
 		down = down + 1
@@ -107,14 +131,31 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
+-- Workaround for the above event not being fired on this server
+function mod:UNIT_DIED(args)
+	if args.destName == "Tesla Coil" then
+		down = down + 1
+		if down >= 2 then
+			self:UnscheduleMethod("TankThrow")
+			timerThrow:Cancel()
+			warnThrowSoon:Cancel()
+			DBM.BossHealth:Hide()
+			enrageTimer:Cancel()
+			enrageTimer:Start(360)
+			timerNextShift:Start(15)
+			soundShift3:Schedule(12)
+		end
+	end
+end
+
 function mod:TankThrow()
 	if not self:IsInCombat() or self.vb.phase == 2 then
 		DBM.BossHealth:Hide()
 		return
 	end
 	timerThrow:Start()
-	warnThrowSoon:Schedule(17.6)
-	self:ScheduleMethod(20.6, "TankThrow")
+	warnThrowSoon:Schedule(22.6)
+	self:ScheduleMethod(25.6, "TankThrow")
 end
 
 local function arrowOnUpdate(self, elapsed)

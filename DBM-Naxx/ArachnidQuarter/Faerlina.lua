@@ -3,49 +3,45 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision(("$Revision: 2248 $"):sub(12, -3))
 mod:SetCreatureID(15953)
---mod:RegisterCombat("combat_yell", L.Pull)
+
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 28798 54100 28732 54097 28794 54099",
-	"UNIT_DIED"
+mod:RegisterEvents(
+	"SPELL_CAST_SUCCESS",
+	"SPELL_AURA_APPLIED"
 )
 
 local warnEmbraceActive		= mod:NewSpellAnnounce(28732, 1)
 local warnEmbraceExpire		= mod:NewAnnounce("WarningEmbraceExpire", 2, 28732)
-local warnEmbraceExpired	= mod:NewFadesAnnounce(28732, 3)
+local warnEmbraceExpired	= mod:NewAnnounce("WarningEmbraceExpired", 3, 28732)
 local warnEnrageSoon		= mod:NewSoonAnnounce(28131, 3)
 local warnEnrageNow			= mod:NewSpellAnnounce(28131, 4)
 
-local specWarnEnrage		= mod:NewSpecialWarningDefensive(28131, nil, nil, nil, 3, 2)
-local specWarnGTFO			= mod:NewSpecialWarningGTFO(28794, nil, nil, nil, 1, 8)
+local timerEmbrace			= mod:NewBuffActiveTimer(30, 28732)
+local timerEnrage			= mod:NewCDTimer(60, 28131)
 
-local timerEmbrace			= mod:NewBuffActiveTimer(30, 28732, nil, nil, nil, 6)
-local timerEnrage			= mod:NewCDTimer(60, 28131, nil, nil, nil, 6)
+local timerPoisonVolley		= mod:NewCDTimer(14, 54098, nil, nil, nil, 5)
 
-mod.vb.enraged = false
+local embraceSpam = 0
+local enraged = false
 
 function mod:OnCombatStart(delay)
 	timerEnrage:Start(-delay)
 	warnEnrageSoon:Schedule(55 - delay)
-	self.vb.enraged = false
+	timerPoisonVolley:Start(-delay)
+	enraged = false
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(28798, 54100) then			-- Frenzy
-		self.vb.enraged = true
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnEnrage:Show()
-			specWarnEnrage:Play("defensive")
-		else
-			warnEnrageNow:Show()
-		end
-	elseif args:IsSpellID(28732, 54097)	and args:GetDestCreatureID() == 15953 and self:AntiSpam(5) then	-- Widow's Embrace
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(28732, 54097)				-- Widow's Embrace
+	and (GetTime() - embraceSpam) > 5 then  -- This spell is casted twice in Naxx 25 (bug?)
+		embraceSpam = GetTime()
 		warnEmbraceExpire:Cancel()
 		warnEmbraceExpired:Cancel()
 		warnEnrageSoon:Cancel()
 		timerEnrage:Stop()
-		if self.vb.enraged then
+		timerPoisonVolley:Cancel()
+		if enraged then
 			timerEnrage:Start()
 			warnEnrageSoon:Schedule(45)
 		end
@@ -53,18 +49,16 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnEmbraceActive:Show()
 		warnEmbraceExpire:Schedule(25)
 		warnEmbraceExpired:Schedule(30)
-		self.vb.enraged = false
-	elseif args:IsSpellID(28794, 54099) and args:IsPlayer() then
-		specWarnGTFO:Show(args.spellName)
-		specWarnGTFO:Play("watchfeet")
+		enraged = fals
+	elseif args:IsSpellID(28796, 54098) then -- Poison Bolt Volley
+		timerPoisonVolley:Cancel()
+		timerPoisonVolley:Start()
 	end
 end
 
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 15953 then
-		warnEnrageSoon:Cancel()
-		warnEmbraceExpire:Cancel()
-		warnEmbraceExpired:Cancel()
+function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpellID(28798, 54100) then			-- Frenzy
+		warnEnrageNow:Show()
+		enraged = GetTime()
 	end
 end
