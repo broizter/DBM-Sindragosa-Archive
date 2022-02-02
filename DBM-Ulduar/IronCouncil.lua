@@ -64,7 +64,7 @@ local specwarnRuneofDeath		= mod:NewSpecialWarningMove(63490, nil, nil, nil, 1, 
 local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispeller", nil, nil, 1, 2)
 
 local timerRuneofShields		= mod:NewBuffActiveTimer(15, 63967)
-local timerRuneofDeath			= mod:NewCDTimer(30, 63490, nil, nil, nil, 3)
+local timerRuneofDeath			= mod:NewCDTimer(35, 63490, nil, nil, nil, 3)
 local timerRuneofPower			= mod:NewCDTimer(30, 61974, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerRuneofSummoning		= mod:NewCDTimer(30, 62273, nil, nil, nil, 1)
 
@@ -157,7 +157,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == "Decipher this!" then
 		warnRuneofDeath:Show()
 		timerRuneofDeath:Start()
-		warnRuneofDeathIn10Sec:Schedule(20)
+		warnRuneofDeathIn10Sec:Schedule(25)
 	end
 end
 
@@ -234,7 +234,7 @@ function mod:UNIT_DIED(args)
 		steelbreakerAlive = false
 		if runemasterAlive and brundirAlive then
 			timerRuneofDeath:Start()
-			warnRuneofDeathIn10Sec:Schedule(20)
+			warnRuneofDeathIn10Sec:Schedule(25)
 			timerLightningWhirlCD:Start()
 		elseif runemasterAlive then
 			timerRuneofSummoning:Start(25)
@@ -253,7 +253,7 @@ function mod:UNIT_DIED(args)
 		brundirAlive = false
 		if runemasterAlive and steelbreakerAlive then
 			timerRuneofDeath:Start()
-			warnRuneofDeathIn10Sec:Schedule(20)
+			warnRuneofDeathIn10Sec:Schedule(25)
 		elseif runemasterAlive then
 			timerRuneofSummoning:Start(25)
 		end
