@@ -30,7 +30,7 @@ local specWarnFuseArmor				= mod:NewSpecialWarningStack(64771, nil, 2, nil, nil,
 local specWarnFuseArmorOther		= mod:NewSpecialWarningTaunt(64771, nil, nil, nil, 1, 2)
 
 local enrageTimer					= mod:NewBerserkTimer(600)
-local timerDeepBreathCooldown		= mod:NewCDTimer(21, 64021, nil, nil, nil, 5)
+local timerDeepBreathCooldown		= mod:NewCDTimer(16, 64021, nil, nil, nil, 5)
 local timerDeepBreathCast			= mod:NewCastTimer(2.5, 64021)
 local timerTurret1					= mod:NewTimer(53, "timerTurret1", 48642, nil, nil, 5)
 local timerTurret2					= mod:NewTimer(73, "timerTurret2", 48642, nil, nil, 5)
@@ -148,12 +148,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, mob)
 			timerTurret1:Start(23)
 			timerTurret2:Start(43)
 		else
-			warnTurretsReadySoon:Schedule(123)
-			warnTurretsReady:Schedule(133)
-			timerTurret1:Start(70)
-			timerTurret2:Start(91)
-			timerTurret3:Start(112)
-			timerTurret4:Start(133)
+			warnTurretsReadySoon:Schedule(105)
+			warnTurretsReady:Schedule(115)
+			timerTurret1:Start(65)
+			timerTurret2:Start(75)
+			timerTurret3:Start(95)
+			timerTurret4:Start(115)
 		end
 	elseif msg == L.YellGround then
 		timerGrounded:Start()
