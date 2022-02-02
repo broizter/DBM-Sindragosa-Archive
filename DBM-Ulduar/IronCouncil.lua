@@ -138,7 +138,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(64321, 61974) then	-- Rune of Power
 		self:BossTargetScanner(32927, "RuneTarget", 0.1, 16, true, true)--Scan only boss unitIDs, scan only hostile targets
-		timerRuneofPower:Start()
+		timerRuneofPower:Start(60)
 	elseif args:IsSpellID(61869, 63481) then	-- Overload
 		timerOverload:Start()
 		timerOverloadCD:Start()
