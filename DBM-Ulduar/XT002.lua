@@ -26,7 +26,7 @@ local specWarnConsumption			= mod:NewSpecialWarningMove(64206, nil, nil, nil, 1,
 
 local enrageTimer					= mod:NewBerserkTimer(360)
 local timerTympanicTantrumCast		= mod:NewCastTimer(62776)
-local timerTympanicTantrum			= mod:NewBuffActiveTimer(8, 62776, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
+local timerTympanicTantrum			= mod:NewBuffActiveTimer(12, 62776, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerTympanicTantrumCD		= mod:NewCDTimer(60, 62776, nil, nil, nil, 2, nil, DBM_CORE_L.HEALER_ICON, nil, 3)
 local timerHeart					= mod:NewCastTimer(30, 63849, nil, nil, nil, 6, nil, DBM_CORE_L.DAMAGE_ICON)
 local timerLightBomb				= mod:NewTargetTimer(9, 65121, nil, nil, nil, 3)
@@ -58,16 +58,14 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 62776 then					-- Tympanic Tantrum (aoe damage + daze)
-		timerTympanicTantrumCast:Start()
+		timerTympanicTantrum:Start()
 		timerTympanicTantrumCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 62775 and args.auraType == "DEBUFF" then	-- Tympanic Tantrum
-		timerTympanicTantrum:Start()
-	elseif args:IsSpellID(63018, 65121) then 	-- Light Bomb
+	if args:IsSpellID(63018, 65121) then 	-- Light Bomb
 		if args:IsPlayer() then
 			specWarnLightBomb:Show()
 			specWarnLightBomb:Play("runout")
@@ -89,9 +87,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		warnGravityBomb:Show(args.destName)
 		timerGravityBomb:Start(args.destName)
-	elseif spellId == 63849 then
-		timerHeart:Start()
-		timerTympanicTantrumCD:Start(65) -- maybe?
+	elseif args:IsSpellID(64193, 65737) then				-- 1st Tympanic Tantrum on HM mode
+		timerHeart:Stop()
+		if self.Options.WarningTympanicTantrumIn10Sec then
+			specWarnTTIn10Sec:Schedule(54)
+		end
+		timerTympanicTantrumCD:Start(64)
 	end
 end
 
