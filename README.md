@@ -2,8 +2,8 @@
 
 # DBM-Warmane (3.3.5a)
 
-[![Game Version](https://img.shields.io/badge/wow-3.3.5-blue.svg)](https://github.com/Zidras/DBM-Warmane)
-[![GitHub Actions](https://github.com/Zidras/DBM-Warmane/workflows/lint/badge.svg?branch=main&event=push)](https://github.com/Zidras/DBM-Warmane/actions?query=workflow%3Alint+branch%3Amain)
+[![Game Version](https://img.shields.io/badge/wow-3.3.5-blue.svg)](https://github.com/broizter/DBM-Warmane)
+[![GitHub Actions](https://github.com/broizter/DBM-Warmane/workflows/lint/badge.svg?branch=main&event=push)](https://github.com/broizter/DBM-Warmane/actions?query=workflow%3Alint+branch%3Amain)
 [![Twitch](https://img.shields.io/twitch/status/the_zidras?style=social)](https://www.twitch.tv/the_zidras)
 [![Discord](https://img.shields.io/discord/598993375479463946.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/CyVWDWS)
 [![PayPal](https://img.shields.io/endpoint?url=https://www.stormfx.com/img/svg/paypal.json)](https://paypal.me/zidras)
@@ -38,7 +38,7 @@ If you would like to show your appreciation for my work (**which is by no means 
 
 **With no remnants of old DBM files we are now ready to start the installation process.**
 
-1. Download the addon from the **main** repository (https://github.com/Zidras/DBM-Warmane/archive/refs/heads/main.zip).
+1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Warmane/archive/refs/heads/main.zip).
 2. Inside the zip file, open DBM-Warmane-main. Copy/Paste all those folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons). DO NOT put the DBM-Warmane-main folder directly into the addon folder, it will not work.
 3. Load your game client into your character selection screen. On the bottom left corner, click AddOns and enable all the DBM entries like so:
 ![image](https://user-images.githubusercontent.com/10605951/127546459-1dd1eb99-8360-40c2-9ffa-093e365cd01b.png)
@@ -46,7 +46,7 @@ If you would like to show your appreciation for my work (**which is by no means 
 
 # HOW TO KEEP THE ADDON UPDATED
 Updating DBM follows the standard procedure that applies to any addon installation. Everytime there are new changes*, do these steps:
-1. Download the addon from the **main** repository (https://github.com/Zidras/DBM-Warmane/archive/refs/heads/main.zip).
+1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Warmane/archive/refs/heads/main.zip).
 2. Inside the zip file, open DBM-Warmane-main. Select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
 3. (**Advisable**) On your addons folder (Interface/Addons), before pasting, select the DBM folders that are there and delete them (you will not lose your profiles doing this, don't worry - those are on WTF folder and there is no need to touch that anymore). This ensures that there is no remnant file that could potentially conflict with latest releases.
 4. On your addons folder (Interface/Addons), Paste (Ctrl+V) the previously copied folders here. DO NOT put the DBM-Warmane-main folder directly into the addon folder, it will not work.
@@ -57,5 +57,5 @@ Updating DBM follows the standard procedure that applies to any addon installati
 To open the options window, type `/dbm` into your chat and hit enter or use the minimap icon. For more commands, type `/dbm help`.
 
 # Problems
-* If you've discovered something that's clearly wrong, or if you get an error, please create a [ticket](https://github.com/Zidras/DBM-Warmane/issues).
+* If you've discovered something that's clearly wrong, or if you get an error, please create a [ticket](https://github.com/broizter/DBM-Warmane/issues).
 * Feel free to join our [Discord](https://discord.gg/CyVWDWS) to talk, get help and discuss anything DBM related!
