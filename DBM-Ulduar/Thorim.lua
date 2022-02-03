@@ -10,7 +10,9 @@ mod:RegisterKill("yell", L.YellKill)
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 62605 64390",
-	"SPELL_AURA_APPLIED 62042 62507 62130 62526 62527",
+	"SPELL_AURA_APPLIED 62042 62507 62130 62526 62527 62279",
+	"SPELL_AURA_REMOVED 62276",
+	"SPELL_AURA_APPLIED_DOSE 62279",
 	"SPELL_CAST_SUCCESS 62042 62466 62130 62604",
 	"SPELL_DAMAGE 62017",
 	"CHAT_MSG_MONSTER_YELL"
@@ -31,7 +33,7 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer					= mod:NewBerserkTimer(369)
 local timerStormhammer				= mod:NewBuffActiveTimer(16, 62042, nil, nil, nil, 3)--Cast timer? Review if i ever do this boss again.
-local timerLightningCharge	 		= mod:NewCDTimer(16, 62466, nil, nil, nil, 3)
+local timerLightningCharge	 		= mod:NewCDTimer(17, 62466, nil, nil, nil, 3)
 local timerUnbalancingStrike		= mod:NewCDTimer(25.6, 62130, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerHardmode					= mod:NewTimer(150, "TimerHardmode", 62042)
 local timerFrostNova				= mod:NewNextTimer(20, 62605)
@@ -93,6 +95,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnStormhammer:Show(args.destName)
 	elseif spellId == 62507 then				-- Touch of Dominion
 		timerHardmode:Start(150)
+	elseif spellId == 62466 then	-- Lightning Charge
+		warnLightningCharge:Schedule(11)
+		timerLightningCharge:Start(15)
 	elseif spellId == 62130 then				-- Unbalancing Strike
 		if args:IsPlayer() then
 			specWarnUnbalancingStrikeSelf:Show()
@@ -116,13 +121,26 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 62276 then 					-- Lightning Charge
+		warnLightningCharge:Schedule(13)
+		timerLightningCharge:Start(17)
+	end
+end
+
+function mod:SPELL_AURA_APPLIED_DOSE(args)
+	local spellId = args.spellId
+	if spellId == 62279 then 					-- Lightning Charge
+		warnLightningCharge:Schedule(11)
+		timerLightningCharge:Start(15)
+	end
+end
+
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 62042 then		-- Storm Hammer
 		timerStormhammer:Schedule(2)
-	elseif spellId == 62466 then	-- Lightning Charge
-		warnLightningCharge:Show()
-		timerLightningCharge:Start()
 	elseif spellId == 62130 then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
 	elseif spellId == 62604 then	-- Frostbolt Volley by Sif
