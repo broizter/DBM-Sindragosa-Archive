@@ -70,12 +70,6 @@ function mod:OnCombatStart(delay)
 	timerNextShockwave:Start(15.7-delay)
 end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 64003 then
-		timerNextSmash:Start()
-	end
-end
-
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(64290, 64292) then
 		if self.Options.SetIconOnGripTarget then
@@ -157,7 +151,12 @@ function mod:SPELL_DAMAGE(_, _, _, destGUID, destName, _, spellId)
 				end
 			end
 		end
-
+	elseif (spellId == 63982 or spellId == 63783) and self:AntiSpam(2, 2) then
+		timerNextShockwave:Start()
+	elseif (spellId == 63346 or spellId == 63976) and self:AntiSpam(10, 2) then
+		timerNextEyebeam:Start()
+	elseif args.spellId == 64003 then
+		timerNextSmash:Start()
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
@@ -181,13 +180,5 @@ function mod:OnSync(msg, target)
 		if self.Options.SetIconOnEyebeamTarget then
 			self:SetIcon(target, 5, 8)
 		end
-	end
-end
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
-	if spellName == GetSpellInfo(63983) then--Arm Sweep
-		timerNextShockwave:Start()
-	elseif spellName == GetSpellInfo(63342) then--Focused Eyebeam Summon Trigger
-		timerNextEyebeam:Start()
 	end
 end
