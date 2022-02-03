@@ -3581,10 +3581,9 @@ local function CreateOptionsMenu()
 	if L.TranslationBy then
 		DBM_GUI_OptionsFrameTranslation:SetText(L.TranslationByPrefix .. L.TranslationBy)
 	end
-	DBM_GUI_OptionsFrameWebsite:SetText(L.Website)
 	local frame = CreateFrame("Button", nil, DBM_GUI_OptionsFrame)
 	frame:SetAllPoints(DBM_GUI_OptionsFrameWebsite)
-	frame:SetScript("OnMouseUp", function(...) DBM:ShowUpdateReminder(nil, nil, CL.COPY_URL_DIALOG, "https://discord.gg/CyVWDWS") end)
+	frame:SetScript("OnMouseUp", function(...) DBM:ShowUpdateReminder(nil, nil, CL.COPY_URL_DIALOG, "https://github.com/broizter/DBM-Warmane") end)
 end
 DBM:RegisterOnGuiLoadCallback(CreateOptionsMenu, 1)
 

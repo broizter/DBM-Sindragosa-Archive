@@ -91,7 +91,7 @@ end
 DBM = {
 	Revision = ("$Revision: 7010 $"):sub(12, -3),
 	Version = "7.10",
-	DisplayVersion = "7.10 DBM-Warmane by Zidras", -- the string that is shown as version
+	DisplayVersion = "7.10 DBM-Warmane by broizter", -- the string that is shown as version
 	ReleaseRevision = 7010 -- the revision of the latest stable version that is available (for /dbm ver2)
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
@@ -4051,7 +4051,7 @@ do
 							else
 								DBM:AddMsg(L.UPDATEREMINDER_HEADER:match("([^\n]*)"))
 								DBM:AddMsg(L.UPDATEREMINDER_HEADER:match("\n(.*)"):format(displayVersion, revision))
-								DBM:AddMsg(("|HDBM:update:%s:%s|h|cff3588ff[https://github.com/Zidras/DBM-Warmane]"):format(displayVersion, revision))
+								DBM:AddMsg(("|HDBM:update:%s:%s|h|cff3588ff[https://github.com/broizter/DBM-Warmane]"):format(displayVersion, revision))
 							end
 						end
 					end
@@ -4676,7 +4676,7 @@ do
 	end
 
 	function DBM:ShowUpdateReminder(newVersion, newRevision, text, url)
-		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/Zidras/DBM-Warmane"
+		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/broizter/DBM-Warmane"
 		if not frame then
 			createFrame()
 		else

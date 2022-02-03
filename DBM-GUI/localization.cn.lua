@@ -12,7 +12,6 @@ L.MainFrame 				= "Deadly Boss Mods"
 
 L.TranslationByPrefix		= "向后移植 "
 L.TranslationBy 			= "Barsoom, Bunny67, Zidras"
-L.Website					= "拜访我们的Discord |cFF73C2FBhttps://discord.gg/CyVWDWS|r."
 L.WebsiteButton				= "GitHub"
 
 L.OTabBosses	            = "模块"--Deprecated and will be deleted once tabs no longer use this
