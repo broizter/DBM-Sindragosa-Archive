@@ -65,7 +65,7 @@ local specWarnRuneofShields		= mod:NewSpecialWarningDispel(63967, "MagicDispelle
 
 local timerRuneofShields		= mod:NewBuffActiveTimer(15, 63967)
 local timerRuneofDeath			= mod:NewCDTimer(35, 63490, nil, nil, nil, 3)
-local timerRuneofPower			= mod:NewCDTimer(30, 61974, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerRuneofPower			= mod:NewCDTimer(60, 61974, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerRuneofSummoning		= mod:NewCDTimer(30, 62273, nil, nil, nil, 1)
 
 local enrageTimer				= mod:NewBerserkTimer(900)
