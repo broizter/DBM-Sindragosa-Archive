@@ -16,6 +16,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_MISSED 63783 63982 63346 63976",
 	"CHAT_MSG_RAID_BOSS_WHISPER",
 	"UNIT_DIED",
+	"CHAT_MSG_MONSTER_YELL",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -109,8 +110,8 @@ function mod:SPELL_AURA_REMOVED(args)
     end
 end
 
-function mod:UNIT_DIED(args)
-	if self:GetCIDFromGUID(args.destGUID) == 32934 then 		-- right arm
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == "Only a flesh wound!" then 		-- right arm?
 		timerRespawnRightArm:Start()
 		timerNextGrip:Cancel()
 		if not self.vb.disarmActive then
@@ -123,7 +124,11 @@ function mod:UNIT_DIED(args)
 				self:Schedule(10, armReset, self)
 			end
 		end
-	elseif self:GetCIDFromGUID(args.destGUID) == 32933 then		-- left arm
+	end
+end
+
+function mod:UNIT_DIED(args)
+	if self:GetCIDFromGUID(args.destGUID) == 32933 then		-- left arm
 		timerRespawnLeftArm:Start()
 		if not self.vb.disarmActive then
 			self.vb.disarmActive = true
@@ -155,7 +160,7 @@ function mod:SPELL_DAMAGE(_, _, _, destGUID, destName, _, spellId)
 		timerNextShockwave:Start()
 	elseif (spellId == 63346 or spellId == 63976) and self:AntiSpam(10, 2) then
 		timerNextEyebeam:Start()
-	elseif args.spellId == 64003 then
+	elseif spellId == 64003 then
 		timerNextSmash:Start()
 	end
 end
