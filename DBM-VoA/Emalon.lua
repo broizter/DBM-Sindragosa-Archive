@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warnOverCharge		= mod:NewSpellAnnounce(64218, 4)
 
-local specWarnNova			= mod:NewSpecialWarningRun(65279, nil, nil, nil, 4, 2)
+local specWarnNova			= mod:NewSpecialWarningRun(65279, nil, nil, nil, 3, 2)
 
 local timerNova				= mod:NewCastTimer(65279, nil, nil, nil, 2)
 local timerNovaCD			= mod:NewCDTimer(40, 65279, nil, nil, nil, 2)--Varies, 45-60seconds in between nova's. FM reported possible 5s less

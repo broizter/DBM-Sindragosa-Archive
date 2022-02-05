@@ -35,9 +35,9 @@ local timerSearingFlamesCast	= mod:NewCastTimer(2, 62661)
 local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 62662, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerNextSurgeofDarkness	= mod:NewCDTimer(61.7, 62662, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerSaroniteVapors		= mod:NewNextCountTimer(30, 63322, nil, nil, nil, 5)
-local timerShadowCrashCD		= mod:NewCDTimer(9, 62660, nil, "Ranged", nil, 3)
+local timerShadowCrashCD		= mod:NewCDTimer(8.5, 62660, nil, "Ranged", nil, 3)
 local timerLifeLeech			= mod:NewTargetTimer(10, 63276, nil, false, 2, 3)
-local timerLifeLeechCD			= mod:NewCDTimer(20.4, 63276, nil, nil, nil, 3)
+local timerLifeLeechCD			= mod:NewCDTimer(40, 63276, nil, nil, nil, 3)
 local timerHardmode				= mod:NewTimer(249, "hardmodeSpawn", nil, nil, nil, 1)
 
 mod:AddSetIconOption("SetIconOnShadowCrash", 62660, true, false, {8})
@@ -80,8 +80,8 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.interruptCount = 0
 	self.vb.vaporsCount = 0
-	timerShadowCrashCD:Start(10.9-delay)
-	timerLifeLeechCD:Start(16.9-delay)
+	timerShadowCrashCD:Start(10.3-delay)
+	timerLifeLeechCD:Start(20-delay)
 	timerSaroniteVapors:Start(30-delay, 1)
 	timerEnrage:Start(-delay)
 	timerHardmode:Start(-delay)
