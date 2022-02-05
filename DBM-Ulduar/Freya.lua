@@ -45,7 +45,7 @@ local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, D
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM_CORE_L.DAMAGE_ICON)
 local timerFury				= mod:NewTargetTimer(10, 63571)
 local timerTremorCD 		= mod:NewCDTimer(26, 62859, 62859, nil, nil, nil, 2)--22.9-47.8
-local timerLifebinderCD		= mod:NewCDTimer(40, 62584, nil, nil, nil, 1)
+local timerLifebinderCD		= mod:NewCDTimer(41, 62584, nil, nil, nil, 1)
 local timerRootsCD			= mod:NewCDTimer(14, 62439, nil, nil, nil, 3)
 local timerUnstableBeamCD	= mod:NewCDTimer(15, 62451) -- Hard mode Sun Beam
 local timerNextBombs		= mod:NewNextTimer(11, 64587)
@@ -67,7 +67,7 @@ function mod:OnCombatStart(delay)
 	timerEnrage:Start()
 	table.wipe(adds)
 	timerAlliesOfNature:Start(10-delay)
-	timerLifebinderCD:Start(25)
+	timerLifebinderCD:Start(30)
 end
 
 function mod:OnCombatEnd(wipe)
