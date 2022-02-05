@@ -157,7 +157,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == "Decipher this!" then
 		warnRuneofDeath:Show()
 		timerRuneofDeath:Start()
-		warnRuneofDeathIn10Sec:Schedule(25)
+		warnRuneofDeathIn10Sec:Schedule(24.5)
 	end
 end
 
