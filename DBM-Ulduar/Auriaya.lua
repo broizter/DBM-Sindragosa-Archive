@@ -29,7 +29,7 @@ local timerDefender 	= mod:NewTimer(30, "timerDefender", 64455, nil, nil, 1)
 local timerFear			= mod:NewCastTimer(64386, nil, nil, nil, 4)
 local timerNextFear 	= mod:NewNextTimer(30, 64386, nil, nil, nil, 4)
 local timerNextSwarm 	= mod:NewNextTimer(38, 64396, nil, nil, nil, 1)
-local timerNextSonic 	= mod:NewNextTimer(25, 64688, nil, nil, nil, 2)
+local timerNextSonic 	= mod:NewNextTimer(51, 64688, nil, nil, nil, 2)
 local timerSonic		= mod:NewCastTimer(64688, nil, nil, nil, 2)
 
 mod.vb.catLives = 9
@@ -38,7 +38,7 @@ function mod:OnCombatStart(delay)
 	self.vb.catLives = 9
 	enrageTimer:Start(-delay)
 	timerNextFear:Start(40-delay)
-	timerNextSonic:Start(60-delay)
+	timerNextSonic:Start(44-delay)
 	timerDefender:Start(60-delay)
 end
 
