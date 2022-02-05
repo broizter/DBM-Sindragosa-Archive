@@ -35,7 +35,7 @@ local specWarnRocketStrike		= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2
 local specWarnDarkGlare			= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 3, 2)
 local specWarnPlasmaBlast		= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
 
-local timerEnrage 				= mod:NewBerserkTimer(900)
+local timerEnrage 				= mod:NewBerserkTimer(480)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 64582)
 local timerP1toP2				= mod:NewTimer(41, "TimeToPhase2", nil, nil, nil, 6)
 local timerP2toP3				= mod:NewTimer(15, "TimeToPhase3", nil, nil, nil, 6)
