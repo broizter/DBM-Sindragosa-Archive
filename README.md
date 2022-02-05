@@ -1,6 +1,6 @@
 <div align="center">
 
-# DBM-Warmane (3.3.5a)
+# DBM-Sindragosa (3.3.5a)
 
 
 
@@ -32,18 +32,18 @@ This is just my version of fixed timers for the Sindragosa server with a focus o
 
 **With no remnants of old DBM files we are now ready to start the installation process.**
 
-1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Warmane/archive/refs/heads/main.zip).
-2. Inside the zip file, open DBM-Warmane-main. Copy/Paste all those folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons). DO NOT put the DBM-Warmane-main folder directly into the addon folder, it will not work.
+1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Sindragosa/archive/refs/heads/main.zip).
+2. Inside the zip file, open DBM-Sindragosa-main. Copy/Paste all those folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons). DO NOT put the DBM-Sindragosa-main folder directly into the addon folder, it will not work.
 3. Load your game client into your character selection screen. On the bottom left corner, click AddOns and enable all the DBM entries like so:
 ![image](https://user-images.githubusercontent.com/10605951/127546459-1dd1eb99-8360-40c2-9ffa-093e365cd01b.png)
 ![image](https://user-images.githubusercontent.com/10605951/127546757-e086103a-34bd-48c5-8555-a734031e1ecc.png)
 
 # HOW TO KEEP THE ADDON UPDATED
 Updating DBM follows the standard procedure that applies to any addon installation. Everytime there are new changes*, do these steps:
-1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Warmane/archive/refs/heads/main.zip).
-2. Inside the zip file, open DBM-Warmane-main. Select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
+1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Sindragosa/archive/refs/heads/main.zip).
+2. Inside the zip file, open DBM-Sindragosa-main. Select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
 3. (**Advisable**) On your addons folder (Interface/Addons), before pasting, select the DBM folders that are there and delete them (you will not lose your profiles doing this, don't worry - those are on WTF folder and there is no need to touch that anymore). This ensures that there is no remnant file that could potentially conflict with latest releases.
-4. On your addons folder (Interface/Addons), Paste (Ctrl+V) the previously copied folders here. DO NOT put the DBM-Warmane-main folder directly into the addon folder, it will not work.
+4. On your addons folder (Interface/Addons), Paste (Ctrl+V) the previously copied folders here. DO NOT put the DBM-Sindragosa-main folder directly into the addon folder, it will not work.
 
 *To know when there are changes, you can Star/Watch this repository on GitHub (this requires a GitHub account) to receive notifications.
 
@@ -51,4 +51,4 @@ Updating DBM follows the standard procedure that applies to any addon installati
 To open the options window, type `/dbm` into your chat and hit enter or use the minimap icon. For more commands, type `/dbm help`.
 
 # Problems
-* If you've discovered something that's clearly wrong, or if you get an error, please create a [ticket](https://github.com/broizter/DBM-Warmane/issues).
+* If you've discovered something that's clearly wrong, or if you get an error, please create a [ticket](https://github.com/broizter/DBM-Sindragosa/issues).

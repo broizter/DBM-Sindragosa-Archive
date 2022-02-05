@@ -16,7 +16,7 @@
 ## DefaultState: enabled
 ## Author: Barsoom, Bunny67, Zidras, broizter, DBM-Frostmourne contributors, original DBM team
 ## Version: 7.10
-## X-Website: https://github.com/broizter/DBM-Warmane
+## X-Website: https://github.com/broizter/DBM-Sindragosa
 
 compat.lua
 
