@@ -158,8 +158,6 @@ function mod:SPELL_DAMAGE(_, _, _, destGUID, destName, _, spellId)
 		end
 	elseif (spellId == 63982 or spellId == 63783) and self:AntiSpam(2, 2) then
 		timerNextShockwave:Start()
-	elseif (spellId == 63346 or spellId == 63976) and self:AntiSpam(10, 2) then
-		timerNextEyebeam:Start()
 	elseif spellId == 64003 then
 		timerNextSmash:Start()
 	end
