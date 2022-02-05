@@ -8,7 +8,7 @@ mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 61920 63479 61879 61903 63493 62274 63489 62273",
+	"SPELL_CAST_START 61920 63479 61879 61903 63493 62274 63489 62273 61911 63495",
 	"SPELL_CAST_SUCCESS 63490 62269 64321 61974 61869 63481",
 	"SPELL_AURA_APPLIED 61903 63493 62269 63490 62277 63967 64637 61888 63486 61887 61912 63494 63483 61915",
 	"SPELL_AURA_REMOVED 64637 61888 63483 61915 61912 63494",
@@ -45,6 +45,7 @@ mod:AddBoolOption("AlwaysWarnOnOverload", false, "announce")
 local warnFusionPunch			= mod:NewSpellAnnounce(61903, 4)
 local warnOverwhelmingPower		= mod:NewTargetAnnounce(61888, 2)
 local warnStaticDisruption		= mod:NewTargetAnnounce(61912, 3)
+local timerStaticDisruptionCD		= mod:NewCDTimer(10, 63495)
 
 local timerOverwhelmingPower	= mod:NewTargetTimer(25, 61888, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON, nil, 3)
 local timerFusionPunchCast		= mod:NewCastTimer(3, 61903, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.MAGIC_ICON)
@@ -129,6 +130,8 @@ function mod:SPELL_CAST_START(args)
 		timerFusionPunchCast:Start()
 	elseif args:IsSpellID(62274, 63489) then	-- Shield of Runes
 		warnShieldofRunes:Show()
+	elseif args:IsSpellID(61911, 63495) then	-- Static Disruption
+		timerStaticDisruptionCD:Start()
 	elseif spellId == 62273 then			-- Rune of Summoning
 		warnRuneofSummoning:Show()
 		timerRuneofSummoning:Start()
@@ -253,6 +256,7 @@ function mod:UNIT_DIED(args)
 		brundirAlive = false
 		if runemasterAlive and steelbreakerAlive then
 			timerRuneofDeath:Start()
+			timerStaticDisruptionCD:Start(20)
 			warnRuneofDeathIn10Sec:Schedule(25)
 		elseif runemasterAlive then
 			timerRuneofSummoning:Start(25)
