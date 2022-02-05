@@ -28,7 +28,7 @@ local enrageTimer		= mod:NewBerserkTimer(600)
 local timerDefender 	= mod:NewTimer(30, "timerDefender", 64455, nil, nil, 1)
 local timerFear			= mod:NewCastTimer(64386, nil, nil, nil, 4)
 local timerNextFear 	= mod:NewNextTimer(30, 64386, nil, nil, nil, 4)
-local timerNextSwarm 	= mod:NewNextTimer(36, 64396, nil, nil, nil, 1)
+local timerNextSwarm 	= mod:NewNextTimer(38, 64396, nil, nil, nil, 1)
 local timerNextSonic 	= mod:NewNextTimer(25, 64688, nil, nil, nil, 2)
 local timerSonic		= mod:NewCastTimer(64688, nil, nil, nil, 2)
 
