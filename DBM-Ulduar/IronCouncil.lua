@@ -169,7 +169,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specwarnRuneofDeath:Show()
 			specwarnRuneofDeath:Play("runaway")
 		end
-	elseif args:IsSpellID(62277, 63967) and not args:IsDestTypePlayer() then		-- Shield of Runes
+	elseif args:IsSpellID(63489, 62274) and not args:IsDestTypePlayer() then		-- Shield of Runes
 		specWarnRuneofShields:Show(args.destName)
 		specWarnRuneofShields:Play("dispelboss")
 		timerRuneofShields:Start()
