@@ -41,7 +41,7 @@ local timerNextShockwave		= mod:NewCDTimer(18, 63982, nil, nil, nil, 2)--15.9-20
 local timerNextEyebeam			= mod:NewCDTimer(18.2, 63346, nil, nil, nil, 3)
 local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)
 local timerRespawnLeftArm		= mod:NewTimer(30, "timerLeftArm", nil, nil, nil, 1)
-local timerRespawnRightArm		= mod:NewTimer(30, "timerRightArm", nil, nil, nil, 1)
+local timerRespawnRightArm		= mod:NewTimer(45, "timerRightArm", nil, nil, nil, 1)
 local timerTimeForDisarmed		= mod:NewTimer(10, "achievementDisarmed")	-- 10 HC / 12 nonHC
 
 local enrageTimer				= mod:NewBerserkTimer(600)
