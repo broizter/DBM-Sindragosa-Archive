@@ -34,7 +34,6 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 local enrageTimer					= mod:NewBerserkTimer(369)
 local timerStormhammer				= mod:NewBuffActiveTimer(16, 62042, nil, nil, nil, 3)--Cast timer? Review if i ever do this boss again.
 local timerLightningCharge	 		= mod:NewCDTimer(13, 62466, nil, nil, nil, 3)
-local timerLightningChargeCast			= mod:NewCastTimer(4, 62466)
 local timerUnbalancingStrike		= mod:NewCDTimer(25.6, 62130, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerHardmode					= mod:NewTimer(150, "TimerHardmode", 62042)
 local timerFrostNova				= mod:NewNextTimer(20, 62605)
@@ -98,7 +97,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerHardmode:Start(150)
 	elseif spellId == 62279 then	-- Lightning Charge
 		warnLightningCharge:Schedule(11)
-		timerLightningChargeCast:Schedule(11)
 		timerLightningCharge:Start(11)
 	elseif spellId == 62130 then				-- Unbalancing Strike
 		if args:IsPlayer() then
@@ -127,7 +125,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 62276 then 					-- Lightning Charge
 		warnLightningCharge:Schedule(13)
-		timerLightningChargeCast:Schedule(13)
 		timerLightningCharge:Start(13)
 	end
 end
@@ -136,7 +133,6 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 	local spellId = args.spellId
 	if spellId == 62279 then 					-- Lightning Charge
 		warnLightningCharge:Schedule(11)
-		timerLightningChargeCast:Schedule(11)
 		timerLightningCharge:Start(11)
 	end
 end
