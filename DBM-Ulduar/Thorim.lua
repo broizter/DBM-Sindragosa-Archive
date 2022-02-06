@@ -96,8 +96,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 62507 then				-- Touch of Dominion
 		timerHardmode:Start(150)
 	elseif spellId == 62279 then	-- Lightning Charge
-		warnLightningCharge:Schedule(11)
-		timerLightningCharge:Start(11)
+		warnLightningCharge:Schedule(10)
+		timerLightningCharge:Start(10)
 	elseif spellId == 62130 then				-- Unbalancing Strike
 		if args:IsPlayer() then
 			specWarnUnbalancingStrikeSelf:Show()
@@ -132,8 +132,8 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	local spellId = args.spellId
 	if spellId == 62279 then 					-- Lightning Charge
-		warnLightningCharge:Schedule(11)
-		timerLightningCharge:Start(11)
+		warnLightningCharge:Schedule(10)
+		timerLightningCharge:Start(10)
 	end
 end
 
