@@ -30,7 +30,7 @@ local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3, 63811)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 3)
 local warnFlamesSoon			= mod:NewSoonAnnounce(64566, 1)
 
-local specWarnShockBlast		= mod:NewSpecialWarningRun(63631, "Melee", nil, nil, 4, 2)
+local specWarnShockBlast		= mod:NewSpecialWarningRun(63631, nil, nil, nil, 4, 2)
 local specWarnRocketStrike		= mod:NewSpecialWarningDodge(64402, nil, nil, nil, 2, 2)
 local specWarnDarkGlare			= mod:NewSpecialWarningDodge(63293, nil, nil, nil, 3, 2)
 local specWarnPlasmaBlast		= mod:NewSpecialWarningDefensive(64529, nil, nil, nil, 1, 2)
