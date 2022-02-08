@@ -47,7 +47,7 @@ local timerFury				= mod:NewTargetTimer(10, 63571)
 local timerTremorCD 		= mod:NewCDTimer(26, 62859, 62859, nil, nil, nil, 2)--22.9-47.8
 local timerLifebinderCD		= mod:NewCDTimer(41, 62584, nil, nil, nil, 1)
 local timerRootsCD			= mod:NewCDTimer(14, 62439, nil, nil, nil, 3)
-local timerUnstableBeamCD	= mod:NewCDTimer(15, 62451) -- Hard mode Sun Beam
+local timerUnstableBeamCD	= mod:NewCDTimer(20, 62451) -- Hard mode Sun Beam
 local timerNextBombs		= mod:NewNextTimer(11, 64587)
 
 mod:AddSetIconOption("SetIconOnFury", 63571, false, false, {7, 8})
@@ -147,7 +147,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(62451, 62865) then
 		if self:AntiSpam(10, 2) then
 			timerUnstableBeamCD:Start()
-			warnUnstableBeamSoon:Schedule(12)
+			warnUnstableBeamSoon:Schedule(15)
 		end
 		if args:IsPlayer() then
 			specWarnUnstableBeam:Show()
