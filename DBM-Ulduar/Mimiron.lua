@@ -246,7 +246,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		DBM:Schedule(0.15, show_warning_for_spinup, self)	-- wait 0.15 and then announce it, otherwise it will sometimes fail
 		lastSpinUp = GetTime()
 	elseif spellId == 65192 then	-- Flame Suppressant CD (phase 2)
-		timerNextFlameSuppressant:Start()
+		timerNextFlameSuppressant:Start(10)
 	end
 end
 
