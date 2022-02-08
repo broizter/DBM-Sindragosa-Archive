@@ -7,6 +7,7 @@ L.MainFrame = "Deadly Boss Mods"
 
 L.TranslationByPrefix		= "Retail backport by "
 L.TranslationBy 			= "Barsoom, Bunny67, Zidras"
+L.Website				= "Discord для обсуждения: |cFF73C2FBhttps://discord.gg/kmwQydTSC4|r"
 L.WebsiteButton				= "GitHub"
 
 L.OTabBosses				= "Боссы"

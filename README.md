@@ -2,7 +2,8 @@
 
 # DBM-Sindragosa (3.3.5a)
 
-
+[![Game Version](https://img.shields.io/badge/wow-3.3.5-blue.svg)](https://github.com/broizter/DBM-Sindragosa)
+[![Discord](https://img.shields.io/discord/940612401651388446?color=%237289da&label=%20&logo=Discord&logoColor=white&style=flat-square)](https://discord.gg/kmwQydTSC4)
 
 </div>
 
@@ -52,3 +53,4 @@ To open the options window, type `/dbm` into your chat and hit enter or use the 
 
 # Problems
 * If you've discovered something that's clearly wrong, or if you get an error, please create a [ticket](https://github.com/broizter/DBM-Sindragosa/issues).
+* Feel free to join our [Discord](https://discord.gg/kmwQydTSC4) to talk, get help and discuss anything DBM related!
