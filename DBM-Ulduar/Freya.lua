@@ -10,7 +10,7 @@ mod:SetUsedIcons(4, 5, 6, 7, 8)
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 62437 62859",
-	"SPELL_CAST_SUCCESS 62678 62673 62619 63571 62589 64650 63601",
+	"SPELL_CAST_SUCCESS 62678 62673 62619 63571 62589 64650 64587 63601",
 	"SPELL_AURA_APPLIED 62283 62438 62439 62861 62862 62930 62451 62865",
 	"SPELL_AURA_REMOVED 62519 62861 62438 63571 62589",
 	"UNIT_DIED",
@@ -120,7 +120,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnFury:Show(args.destName)
 		end
 		timerFury:Start(args.destName)
-	elseif args.spellId == 64650 then -- Nature Bomb
+	elseif args.IsSpellID(64587, 64650) then -- Nature Bomb
 		if self:AntiSpam(1, 64650) and self:IsInCombat() then
 			timerNextBombs:Start(5)
 			specWarnBombs:Cancel()
