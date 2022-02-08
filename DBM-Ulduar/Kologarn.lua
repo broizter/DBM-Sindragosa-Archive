@@ -123,8 +123,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 				self:Schedule(10, armReset, self)
 			end
 		end
-	end
-	elif msg == "Just a scratch!" then		-- left arm
+	elseif msg == "Just a scratch!" then		-- left arm
 		timerRespawnLeftArm:Start()
 		if not self.vb.disarmActive then
 			self.vb.disarmActive = true
