@@ -118,7 +118,7 @@ local function NextPhase(self)
 		timerPlasmaBlastCD:Stop()
 		timerNextFlameSuppressant:Stop()
 		timerP1toP2:Start()
-		timerNextDarkGlare:Schedule(30)
+		timerNextDarkGlare:Schedule(40)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
