@@ -120,14 +120,14 @@ end
 local frostBlastTargets = {}
 local chainsTargets = {}
 
-function mod:SPELL_SUMMON(args)
+--[[ function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(27810) and self:AntiSpam(2, 1) then
 		warnFissure:Show()
 		specwarnfissure:Show()
 		soundFissure:Play("Interface\\AddOns\\DBM-Core\\sounds\\beware.ogg")
 		fissureCD:Start()
 	end
-end
+end --]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(27808) then -- Frost Blast
