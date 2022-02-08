@@ -34,7 +34,7 @@ local specWarnPhasePunch		= mod:NewSpecialWarningStack(64412, nil, 4, nil, nil, 
 local specWarnBigBang			= mod:NewSpecialWarningSpell(64584, nil, nil, nil, 3, 2)
 local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(64596, nil, nil, nil, 2, 2)
 
-local timerNextBigBang			= mod:NewNextTimer(90.5, 64584, nil, nil, nil, 2)
+local timerNextBigBang			= mod:NewNextTimer(90, 64584, nil, nil, nil, 2)
 local timerBigBangCast			= mod:NewCastTimer(8, 64584, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
 local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar", "Interface\\Icons\\INV_Enchant_EssenceCosmicGreater", nil, nil, 2, DBM_CORE_L.HEALER_ICON)
 local timerCDCosmicSmash		= mod:NewCDTimer(24.6, 64596, nil, nil, nil, 3)
@@ -154,8 +154,8 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
 	if spellName == GetSpellInfo(65311) then--Supermassive Fail (fires when he becomes actually active)
-		timerNextCollapsingStar:Start(16)
-		timerCDCosmicSmash:Start(26)
+		timerNextCollapsingStar:Start(16.5)
+		timerCDCosmicSmash:Start(25)
 		announcePreBigBang:Schedule(80)
 		timerNextBigBang:Start(90)
 		enrageTimer:Start(360)
