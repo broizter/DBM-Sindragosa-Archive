@@ -60,7 +60,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnWebWrap:Play("targetchange")
 		end
 	-- Synergie-Sindragosa workaround since Web Spray doesn't seem to fire on SPELL_CAST_SUCCESS
-	elseif args:IsSpellID(29484, 54125) then -- Web Spray
+	elseif args:IsSpellID(29484, 54125) and self:AntiSpam(2, 2) then -- Web Spray
 		warnWebSprayNow:Show()
 		warnWebSpraySoon:Schedule(25)
 		timerWebSpray:Start(30)
