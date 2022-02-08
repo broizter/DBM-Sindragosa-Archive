@@ -52,7 +52,7 @@ local timerPlasmaBlastCD		= mod:NewCDTimer(30, 64529, nil, "Tank", 2, 5)
 local timerShell				= mod:NewBuffActiveTimer(6, 63666, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerNextFlameSuppressant	= mod:NewNextTimer(60, 64570, nil, nil, nil, 3)
 local timerFlameSuppressant		= mod:NewBuffActiveTimer(10, 65192, nil, nil, nil, 3)
-local timerNextFlames			= mod:NewNextTimer(28.5, 64566)
+local timerNextFlames			= mod:NewNextTimer(30, 64566)
 local timerNextFrostBomb		= mod:NewNextTimer(30, 64623, nil, nil, nil, 3, nil, DBM_CORE_L.HEROIC_ICON)
 local timerBombExplosion		= mod:NewCastTimer(15, 65333, nil, nil, nil, 3)
 local timerBombBotSpawn			= mod:NewCDTimer(15, 63811)
@@ -78,9 +78,8 @@ end
 
 local function Flames(self)	-- Flames
 	timerNextFlames:Start()
-	self:Schedule(28.5, Flames, self)
-	warnFlamesSoon:Schedule(19.5)
-	warnFlamesSoon:Schedule(25.5)
+	self:Schedule(30, Flames, self)
+	warnFlamesSoon:Schedule(20)
 end
 
 local function warnNapalmShellTargets(self)
