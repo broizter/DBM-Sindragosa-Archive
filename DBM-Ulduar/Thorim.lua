@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 62042 62507 62130 62526 62527 62279",
 	"SPELL_AURA_REMOVED 62276",
 	"SPELL_AURA_APPLIED_DOSE 62279",
-	"SPELL_CAST_SUCCESS 62042 62466 62130 62604",
+	"SPELL_CAST_SUCCESS 62042 62466 62130 62604 62580",
 	"SPELL_DAMAGE 62017",
 	"CHAT_MSG_MONSTER_YELL"
 )
@@ -143,7 +143,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerStormhammer:Schedule(2)
 	elseif spellId == 62130 then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
-	elseif spellId == 62604 then	-- Frostbolt Volley by Sif
+	elseif args.IsSpellID(62580, 62604) then	-- Frostbolt Volley by Sif
 		timerFBVolley:Start()
 	end
 end
