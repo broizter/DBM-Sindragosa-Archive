@@ -155,6 +155,7 @@ local function NextPhase(self)
 		self:Unschedule(BombBot)
 		timerP3toP4:Start()
 		timerProximityMines:Start(33)
+		timerNextShockblast:Start(57)
 		timerNextDarkGlare:Start(72)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Show(L.name)
