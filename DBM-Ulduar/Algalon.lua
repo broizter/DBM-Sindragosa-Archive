@@ -41,6 +41,7 @@ local timerCDCosmicSmash		= mod:NewCDTimer(24.6, 64596, nil, nil, nil, 3)
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 64596)
 local timerPhasePunch			= mod:NewTargetTimer(45, 64412, nil, "Tank", 2, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerNextPhasePunch		= mod:NewNextTimer(15.5, 64412, nil, "Tank", 2, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerCombatStart			= mod:NewCombatTimer(8)
 local enrageTimer				= mod:NewBerserkTimer(360)
 
 local warned_star = {}
@@ -56,6 +57,7 @@ function mod:OnCombatStart(delay)
 	stars_hp = {}
 	star_num = 1
 	self.vb.warned_preP2 = false
+	timerCombatStart:Start()
 end
 
 function mod:OnCombatEnd()
