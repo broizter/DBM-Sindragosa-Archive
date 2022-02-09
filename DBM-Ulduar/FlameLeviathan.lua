@@ -41,7 +41,7 @@ function mod:OnCombatStart(delay)
 	if self:IsDifficulty("normal10") then
 		timerNextFlameVents:Start(20)
 	else
-		timerNextFlameVents:Start(30)
+		timerNextFlameVents:Start(20)
 	end
 end
 
