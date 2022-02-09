@@ -1153,11 +1153,11 @@ do
 				voiceSessionDisabled = true
 				AddMsg(DBM, L.VOICE_MISSING)
 			end
-		else
+--[[		else
 			if not self.Options.DontShowReminders and #self.Voices > 1 then
 				--At least one voice pack installed but activeVP set to "None"
 				AddMsg(DBM, L.VOICE_DISABLED)
-			end
+			end --]]
 		end
 		--Check if any of countdown sounds are using missing voice pack
 		local found1, found2, found3 = false, false, false
