@@ -32,8 +32,8 @@ local specWarnFuseArmorOther		= mod:NewSpecialWarningTaunt(64771, nil, nil, nil,
 local enrageTimer					= mod:NewBerserkTimer(600)
 local timerDeepBreathCooldown		= mod:NewCDTimer(16, 64021, nil, nil, nil, 5)
 local timerDeepBreathCast			= mod:NewCastTimer(2.5, 64021)
-local timerTurret1					= mod:NewTimer(53, "timerTurret1", 48642, nil, nil, 5)
-local timerTurret2					= mod:NewTimer(73, "timerTurret2", 48642, nil, nil, 5)
+local timerTurret1					= mod:NewTimer(53.5, "timerTurret1", 48642, nil, nil, 5)
+local timerTurret2					= mod:NewTimer(73.5, "timerTurret2", 48642, nil, nil, 5)
 local timerTurret3					= mod:NewTimer(94, "timerTurret3", 48642, nil, nil, 5)
 local timerTurret4					= mod:NewTimer(114, "timerTurret4", 48642, nil, nil, 5)
 local timerGrounded					= mod:NewTimer(37, "timerGrounded", nil, nil, nil, 6)
@@ -72,8 +72,8 @@ function mod:OnCombatStart(delay)
 		timerTurret1:Start(-delay)
 		timerTurret2:Start(-delay)
 	else
-		warnTurretsReadySoon:Schedule(95-delay)
-		warnTurretsReady:Schedule(117-delay)
+		warnTurretsReadySoon:Schedule(104-delay)
+		warnTurretsReady:Schedule(114-delay)
 		timerTurret1:Start(-delay) -- 53sec
 		timerTurret2:Start(-delay) -- +20
 		timerTurret3:Start(-delay) -- +20
@@ -150,10 +150,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, mob)
 		else
 			warnTurretsReadySoon:Schedule(105)
 			warnTurretsReady:Schedule(115)
-			timerTurret1:Start(65)
-			timerTurret2:Start(75)
-			timerTurret3:Start(95)
-			timerTurret4:Start(115)
+			timerTurret1:Start(53.5)
+			timerTurret2:Start(73.5)
+			timerTurret3:Start(93.5)
+			timerTurret4:Start(114)
 		end
 	elseif msg == L.YellGround then
 		timerGrounded:Start()
