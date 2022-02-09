@@ -122,9 +122,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFury:Start(args.destName)
 	elseif args.IsSpellID(64587, 64650) then -- Nature Bomb
 		if self:AntiSpam(1, 64650) and self:IsInCombat() then
-			timerNextBombs:Start(5)
+			timerNextBombs:Start(4.5)
 			specWarnBombs:Cancel()
-			specWarnBombs:Schedule(5)
+			specWarnBombs:Schedule(4.5)
 		end
 	elseif args.spellId == 63601 then
 		--if self.vb.phase == 2 then
