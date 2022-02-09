@@ -93,6 +93,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnTTIn10Sec:Schedule(54)
 		end
 		timerTympanicTantrumCD:Start(64)
+	elseif args:IsSpellID(63849) then
+		timerHeart:Start()
+		timerTympanicTantrumCD:Stop()
 	end
 end
 
