@@ -89,9 +89,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerGravityBomb:Start(args.destName)
 	elseif args:IsSpellID(64193, 65737) then				-- 1st Tympanic Tantrum on HM mode
 		timerHeart:Stop()
-		if self.Options.WarningTympanicTantrumIn10Sec then
+		--[[ if self.Options.WarningTympanicTantrumIn10Sec then
 			specWarnTTIn10Sec:Schedule(54)
-		end
+		end ]]-- not a valid function?
 		timerTympanicTantrumCD:Start(64)
 	elseif args:IsSpellID(63849) then
 		timerHeart:Start()
