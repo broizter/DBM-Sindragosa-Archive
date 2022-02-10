@@ -118,8 +118,8 @@ function mod:SPELL_CAST_START(args)
 		timerMadness:Start()
 		warnMadness:Show()
 		timerBrainPortal:Schedule(60)
-		warnBrainPortalSoon:Schedule(78)
-		specWarnBrainPortalSoon:Schedule(78)
+		warnBrainPortalSoon:Schedule(75)
+		specWarnBrainPortalSoon:Schedule(75)
 		specWarnMadnessOutNow:Schedule(55)
 	elseif spellId == 64189 then		--Deafening Roar
 		timerNextDeafeningRoar:Start()
@@ -142,8 +142,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnEmpowerSoon:Schedule(40)
 	elseif args:IsSpellID(64167, 64163) and self:AntiSpam(3, 3) then	-- Lunatic Gaze
 		timerLunaricGaze:Start()
-		timerBrainPortal:Start(60)
-		warnBrainPortalSoon:Schedule(55)
 	end
 end
 
@@ -287,7 +285,6 @@ function mod:OnSync(msg)
 		warnBrainPortalSoon:Cancel()
 		timerMaladyCD:Cancel()
 		timerBrainLinkCD:Cancel()
-		timerBrainPortal:Stop()
 		timerEmpower:Start()
 		warnP3:Show()
 		warnEmpowerSoon:Schedule(40)
