@@ -180,7 +180,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnOverwhelmingPower:Show(args.destName)
 		if args:IsPlayer() then
 			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(20)
+				DBM.RangeCheck:Show(30)
 			end
 		end
 		if self:IsDifficulty("normal10") then
