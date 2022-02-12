@@ -36,7 +36,11 @@ mod.vb.stormCloudIcon = 8
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	timerFlashFrCD:Start(-delay)
+	if self:IsDifficulty("normal10") then
+		timerFlashFrCD:Start(60-delay)
+	else
+		timerFlashFrCD:Start(-delay)
+	end
 	self.vb.stormCloudIcon = 8
 end
 
