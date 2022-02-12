@@ -84,7 +84,9 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(63317, 64021) then	-- deep breath
 		timerDeepBreathCast:Start()
-		timerDeepBreathCooldown:Start()
+		if self.vb.phase == 2 then
+			timerDeepBreathCooldown:Start()
+		end
 	elseif args.spellId == 63236 then
 		self:BossTargetScanner(args.sourceGUID, "FlameTarget", 0.1, 12)
 	end
