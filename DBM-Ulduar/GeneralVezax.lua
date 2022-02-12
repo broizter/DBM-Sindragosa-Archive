@@ -147,7 +147,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 				local inRange = CheckInteractDistance(uId, 2)
 				if inRange then
 					specWarnLifeLeechNear:Show(args.destName)
-					specWarnLifeLeechNear:Play("runaway")
 				else
 					warnLeechLife:Show(args.destName)
 				end
