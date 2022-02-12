@@ -67,12 +67,12 @@ function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	combattime = GetTime()
 	if self:IsDifficulty("normal10") then
-		warnTurretsReadySoon:Schedule(53-delay)
-		warnTurretsReady:Schedule(73-delay)
-		timerTurret1:Start(-delay)
-		timerTurret2:Start(-delay)
+		warnTurretsReadySoon:Schedule(51.5-delay)
+		warnTurretsReady:Schedule(71.5-delay)
+		timerTurret1:Start(52.2-delay)
+		timerTurret2:Start(71.5-delay)
 	else
-		warnTurretsReadySoon:Schedule(104-delay)
+		warnTurretsReadySoon:Schedule(54-delay)
 		warnTurretsReady:Schedule(114-delay)
 		timerTurret1:Start(-delay) -- 53sec
 		timerTurret2:Start(-delay) -- +20
@@ -143,13 +143,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, mob)
 	if isGrounded and (msg == L.YellAir or msg == L.YellAir2) and GetTime() - combattime > 30 then
 		isGrounded = false -- warmane resets the timers idk why
 		if self:IsDifficulty("normal10") then -- not sure?
-			warnTurretsReadySoon:Schedule(23)
-			warnTurretsReady:Schedule(43)
-			timerTurret1:Start(23)
-			timerTurret2:Start(43)
+			warnTurretsReadySoon:Schedule(51)
+			warnTurretsReady:Schedule(71)
+			timerTurret1:Start(52)
+			timerTurret2:Start(71)
 		else
-			warnTurretsReadySoon:Schedule(105)
-			warnTurretsReady:Schedule(115)
+			warnTurretsReadySoon:Schedule(54)
+			warnTurretsReady:Schedule(114)
 			timerTurret1:Start(53.5)
 			timerTurret2:Start(73.5)
 			timerTurret3:Start(93.5)
