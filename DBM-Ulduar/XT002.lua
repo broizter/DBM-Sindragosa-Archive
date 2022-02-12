@@ -41,7 +41,7 @@ function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
 	if self:IsDifficulty("normal10") then
-		timerTympanicTantrumCD:Start(35-delay)
+		timerTympanicTantrumCD:Start(60-delay)
 	else
 		timerTympanicTantrumCD:Start(60-delay)
 	end
