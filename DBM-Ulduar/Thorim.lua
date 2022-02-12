@@ -9,7 +9,7 @@ mod:RegisterCombat("yell", L.YellPhase1)
 mod:RegisterKill("yell", L.YellKill)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 62605 62131 64390",
+	"SPELL_CAST_START 62597 62605 62131 64390",
 	"SPELL_AURA_APPLIED 62042 62507 62130 62526 62527 62279",
 	"SPELL_AURA_REMOVED 62276",
 	"SPELL_AURA_APPLIED_DOSE 62279",
@@ -81,7 +81,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 62605 then		-- Frost Nova by Sif
+	if args:IsSpellID(62597, 62605) then		-- Frost Nova by Sif
 		timerFrostNovaCast:Start()
 		timerFrostNova:Start()
 	elseif args:IsSpellID(62131, 64390) then	-- Chain Lightning by Thorim
