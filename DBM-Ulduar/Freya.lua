@@ -120,8 +120,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnFury:Show(args.destName)
 		end
 		timerFury:Start(args.destName)
-	elseif args.IsSpellID(64587, 64650) then -- Nature Bomb
-		if self:AntiSpam(1, 64650) and self:IsInCombat() then
+	elseif args:IsSpellID(64587, 64650) then -- Nature Bomb
+		if self:AntiSpam(1, 3) and self:IsInCombat() then
 			timerNextBombs:Start(4.5)
 			specWarnBombs:Cancel()
 			specWarnBombs:Schedule(4.5)
