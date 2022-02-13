@@ -143,7 +143,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerStormhammer:Schedule(2)
 	elseif spellId == 62130 then	-- Unbalancing Strike
 		timerUnbalancingStrike:Start()
-	elseif args.IsSpellID(62580, 62604) then	-- Frostbolt Volley by Sif
+	elseif args:IsSpellID(62580, 62604) then	-- Frostbolt Volley by Sif
 		timerFBVolley:Start()
 	end
 end
