@@ -35,7 +35,7 @@ local specWarnEyebeamNear		= mod:NewSpecialWarningClose(63346, nil, nil, nil, 1,
 local yellBeam					= mod:NewYell(63346)
 
 local timerCrunch10             = mod:NewTargetTimer(6, 63355)
-local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerNextSmash			= mod:NewCDTimer(13, 64003, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerNextShockwave		= mod:NewCDTimer(18, 63982, nil, nil, nil, 2)--15.9-20
 local timerNextEyebeam			= mod:NewCDTimer(18.2, 63346, nil, nil, nil, 3)
 local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)
@@ -65,7 +65,7 @@ end
 
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
-	timerNextSmash:Start(10-delay)
+	timerNextSmash:Start(8-delay)
 	timerNextEyebeam:Start(11-delay)
 	timerNextShockwave:Start(15.7-delay)
 end
