@@ -49,7 +49,7 @@ local timerSpinUp				= mod:NewCastTimer(4, 63414, nil, nil, nil, 3, nil, DBM_COR
 local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)
 local timerNextDarkGlare		= mod:NewNextTimer(31, 63414, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)
 local timerNextShockblast		= mod:NewNextTimer(30, 63631, nil, nil, nil, 2)
-local timerPlasmaBlastCD		= mod:NewCDTimer(30, 64529, nil, "Tank", 2, 5)
+local timerPlasmaBlastCD		= mod:NewCDTimer(45, 64529, nil, "Tank|Healer", 2, 5)
 local timerShell				= mod:NewBuffActiveTimer(6, 63666, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerNextFlameSuppressant	= mod:NewNextTimer(75, 64570, nil, nil, nil, 3)
 local timerFlameSuppressant		= mod:NewBuffActiveTimer(10, 65192, nil, nil, nil, 3)
@@ -185,7 +185,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(napalmShellTargets)
 	self:SetWipeTime(20)
 	NextPhase(self)
-	timerPlasmaBlastCD:Start(24-delay)
+	timerPlasmaBlastCD:Start(27-delay)
 	if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
 	end
@@ -227,9 +227,9 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(64529, 62997) then	-- Plasma Blast
 		local tanking, status = UnitDetailedThreatSituation("player", "boss1")--Change boss unitID if it's not boss 1
 		if tanking or (status == 3) then
-			specWarnPlasmaBlast:Show()
 			specWarnPlasmaBlast:Play("defensive")
 		end
+		specWarnPlasmaBlast:Show()
 		timerPlasmaBlastCD:Start()
 	elseif spellId == 64570 then	-- Flame Suppressant (phase 1)
 		timerFlameSuppressant:Start()
@@ -320,7 +320,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self.vb.hardmode = true
 		self:SetWipeTime(35)
 		timerHardmode:Start()
-		timerPlasmaBlastCD:Start(28)
+		timerPlasmaBlastCD:Start(32)
 		timerProximityMines:Start(21)
 		timerNextFlames:Start(7)
 		timerNextFlameSuppressant:Start()
