@@ -302,12 +302,14 @@ L:SetWarningLocalization({
 
 L:SetTimerLocalization({
 	TimerHardmode	= "困難模式 - 自毀程序",
+	TimeToPhase1	= "第1階段開始",
 	TimeToPhase2	= "第2階段開始",
 	TimeToPhase3	= "第3階段開始",
 	TimeToPhase4	= "第4階段開始"
 })
 
 L:SetOptionLocalization({
+	TimeToPhase1			= "為第1階段開始顯示計時器",
 	TimeToPhase2			= "為第2階段開始顯示計時器",
 	TimeToPhase3			= "為第3階段開始顯示計時器",
 	TimeToPhase4			= "為第4階段開始顯示計時器",

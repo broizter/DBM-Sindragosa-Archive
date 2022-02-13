@@ -302,12 +302,14 @@ L:SetWarningLocalization({
 
 L:SetTimerLocalization({
 	TimerHardmode			= "광폭화",
+	TimeToPhase1			= "1 단계",
 	TimeToPhase2			= "2 단계",
 	TimeToPhase3			= "3 단계",
 	TimeToPhase4			= "4 단계"
 })
 
 L:SetOptionLocalization({
+	TimeToPhase1			= "1 단계 바 보기",
 	TimeToPhase2			= "2 단계 바 보기",
 	TimeToPhase3			= "3 단계 바 보기",
 	TimeToPhase4			= "4 단계 바 보기",
