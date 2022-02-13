@@ -37,6 +37,7 @@ local specWarnPlasmaBlast		= mod:NewSpecialWarningDefensive(64529, nil, nil, nil
 
 local timerEnrage 				= mod:NewBerserkTimer(480)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 64582)
+local timerP1					= mod:NewTimer(8, "TimeToPhase1", nil, nil, nil, 6)
 local timerP1toP2				= mod:NewTimer(40, "TimeToPhase2", nil, nil, nil, 6)
 local timerP2toP3				= mod:NewTimer(17, "TimeToPhase3", nil, nil, nil, 6)
 local timerP3toP4				= mod:NewTimer(27, "TimeToPhase4", nil, nil, nil, 6)
@@ -173,6 +174,7 @@ function mod:OnCombatStart(delay)
 	self.vb.phase = 0
 	self.vb.hardmode = false
 	timerEnrage:Start(-delay)
+	timerP1:Start()
 	if self:IsDifficulty("normal10") then
 		timerNextShockblast:Start(32.3-delay)
 	else
