@@ -213,11 +213,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 63894 and self.vb.phase < 2 then	-- Shadowy Barrier of Yogg-Saron (this is happens when p2 starts)
 		self:SetStage(2)
-		timerMaladyCD:Start(13)--VERIFY ME
-		timerBrainLinkCD:Start(19)--VERIFY ME
-		timerBrainPortal:Start(60)
-		warnBrainPortalSoon:Schedule(56)
-		specWarnBrainPortalSoon:Schedule(56)
+		timerMaladyCD:Start(12)--VERIFY ME
+		timerBrainLinkCD:Start(3)--VERIFY ME
+		timerBrainPortal:Start(61)
+		warnBrainPortalSoon:Schedule(58)
+		specWarnBrainPortalSoon:Schedule(58)
 		warnP2:Show()
 		if self.Options.ShowSaraHealth then
 			DBM.BossHealth:RemoveBoss(33134)
