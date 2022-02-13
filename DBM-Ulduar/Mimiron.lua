@@ -173,7 +173,11 @@ function mod:OnCombatStart(delay)
 	self.vb.phase = 0
 	self.vb.hardmode = false
 	timerEnrage:Start(-delay)
-	timerNextShockblast:Start(35-delay)
+	if self:IsDifficulty("normal10") then
+		timerNextShockblast:Start(32.3-delay)
+	else
+		timerNextShockblast:Start(34.7-delay)
+	end
 	self.vb.is_spinningUp = false
 	self.vb.napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
