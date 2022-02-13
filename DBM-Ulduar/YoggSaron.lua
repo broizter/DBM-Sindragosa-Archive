@@ -7,7 +7,7 @@ mod:RegisterCombat("yell", L.YellPull)
 mod:SetUsedIcons(8, 7, 6, 2, 1)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 64059 64189 63138",
+	"SPELL_CAST_START 64059 64189 63138 63830 63881",
 	"SPELL_CAST_SUCCESS 64144 64465 64167 64163",
 	"SPELL_SUMMON 62979",
 	"SPELL_AURA_APPLIED 63802 63830 63881 64126 64125 63138 63894 64167 64163 64465",
@@ -42,7 +42,7 @@ local yellSqueeze					= mod:NewYell(64125)
 
 local enrageTimer					= mod:NewBerserkTimer(900)
 local timerFervor					= mod:NewTargetTimer(15, 63138, nil, false, 2)
-local timerMaladyCD					= mod:NewCDTimer(18.1, 63830, nil, nil, nil, 3)
+local timerMaladyCD					= mod:NewCDTimer(21, 63830, nil, nil, nil, 3)
 local timerBrainLinkCD				= mod:NewCDTimer(32, 63802, nil, nil, nil, 3)
 local timerBrainPortal				= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 5)
 local timerLunaricGaze				= mod:NewCastTimer(4, 64163, nil, nil, nil, 2)
@@ -129,6 +129,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnDeafeningRoar:Play("silencesoon")
 	elseif spellId == 63138 then		--Sara's Fervor
 		self:BossTargetScanner(args.sourceGUID, "FervorTarget", 0.1, 12, true, nil, nil, nil, true)
+	elseif args:IsSpellID(63830, 63881) then
+		timerMaladyCD:Start()
 	end
 end
 
