@@ -81,7 +81,7 @@ local steelbreakerAlive = true
 
 local function ResetRange(self)
 	if self.Options.RangeFrame then
-		DBM.RangeCheck:DisableBossMode()
+		DBM.RangeCheck:Hide()
 	end
 end
 
@@ -150,7 +150,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specwarnOverload:Play("justrun")
 		end
 		if self.Options.RangeFrame then
-			DBM.RangeCheck:SetBossRange(20, self:GetBossUnitByCreatureId(32857))
+			DBM.RangeCheck:SetBossRange(30, self:GetBossUnitByCreatureId(32857))
 			self:Schedule(6.5, ResetRange, self)
 		end
 	end
@@ -180,7 +180,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnOverwhelmingPower:Show(args.destName)
 		if args:IsPlayer() then
 			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(30)
+				DBM.RangeCheck:Show(20)
 			end
 		end
 		if self:IsDifficulty("normal10") then
@@ -256,6 +256,9 @@ function mod:UNIT_DIED(args)
 		brundirAlive = false
 		if runemasterAlive and steelbreakerAlive then
 			timerRuneofDeath:Start()
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(6)
+			end
 			timerStaticDisruptionCD:Start(20)
 			warnRuneofDeathIn10Sec:Schedule(25)
 		elseif runemasterAlive then
