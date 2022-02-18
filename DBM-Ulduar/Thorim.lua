@@ -120,20 +120,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 62276 then 					-- Lightning Charge
 		warnLightningCharge:Schedule(13)
 		timerLightningCharge:Start(13)
-	end
-end
-
-function mod:SPELL_AURA_APPLIED_DOSE(args)
-	local spellId = args.spellId
-	if spellId == 62279 then 					-- Lightning Charge
-		warnLightningCharge:Schedule(10)
-		timerLightningCharge:Start(10)
 	end
 end
 
