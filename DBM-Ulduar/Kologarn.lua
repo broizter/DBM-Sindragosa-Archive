@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 64290 64292 64002 63355",
 	"SPELL_AURA_APPLIED_DOSE 64002 63355",
 	"SPELL_AURA_REMOVED 64290 64292",
-	"SPELL_DAMAGE 63783 63982 63346 63976",
+	"SPELL_DAMAGE 63783 63982 63346 63976 63356",
 	"SPELL_MISSED 63783 63982 63346 63976",
 	"CHAT_MSG_RAID_BOSS_WHISPER",
 	"CHAT_MSG_MONSTER_YELL",
@@ -153,7 +153,7 @@ function mod:SPELL_DAMAGE(_, _, _, destGUID, destName, _, spellId)
 		end
 	elseif (spellId == 63982 or spellId == 63783) and self:AntiSpam(2, 3) then
 		timerNextShockwave:Start()
-	elseif spellId == 64003 then
+	elseif args:IsSpellID(64003, 63356) then
 		timerNextSmash:Start()
 	end
 end
