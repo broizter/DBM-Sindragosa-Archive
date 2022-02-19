@@ -18,13 +18,16 @@ mod:RegisterKill("yell", L.YellKill)
 mod:SetWipeTime(20)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START",
-	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_APPLIED_DOSE",
+	"CHAT_MSG_MONSTER_YELL"
+)
+
+mod:RegisterEventsInCombat(
 	"CHAT_MSG_RAID_BOSS_EMOTE",
-	"CHAT_MSG_MONSTER_YELL",
-	"UNIT_HEALTH"
+	"UNIT_HEALTH",
+	"SPELL_AURA_APPLIED 64412",
+	"SPELL_AURA_APPLIED_DOSE 64412",
+	"SPELL_CAST_SUCCESS 65108 64122 64598 62301",
+	"SPELL_CAST_START 64584 64443"
 )
 
 local warnPhase2				= mod:NewPhaseAnnounce(2, 2)
@@ -55,7 +58,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:startTimers()
-	if mod:IsDifficulty("heroic10") then
+	if mod:IsDifficulty("normal10") then
 		enrageTimer:Start(360)
 		timerNextBigBang:Start(90)
 		announcePreBigBang:Schedule(80)
@@ -72,7 +75,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(64584, 64443) then 	-- Big Bang
 		timerBigBangCast:Start()
-		if mod:IsDifficulty("heroic10") then
+		if mod:IsDifficulty("normal10") then
 			timerNextBigBang:Start(90)
 			announcePreBigBang:Schedule(80)
 		else
