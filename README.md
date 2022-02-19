@@ -1,10 +1,12 @@
 <div align="center">
 
 # DBM-Sindragosa (3.3.5a)
-
+  
 [![Game Version](https://img.shields.io/badge/wow-3.3.5-blue.svg)](https://github.com/broizter/DBM-Sindragosa)
 [![Discord](https://img.shields.io/discord/940612401651388446?color=%237289da&label=%20&logo=Discord&logoColor=white&style=flat-square)](https://discord.gg/kmwQydTSC4)
-
+  
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y3ALGE3)
+  
 </div>
 
 Core addon backport from retail by Barsoomx: (https://github.com/Barsoomx/DBM-wowcircle).  
