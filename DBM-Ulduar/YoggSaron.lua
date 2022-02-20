@@ -51,7 +51,7 @@ local timerEmpower					= mod:NewCDTimer(46, 64486, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64486, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 64059, nil, nil, nil, 5, nil, DBM_CORE_L.DEADLY_ICON, nil, 3)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 64189, nil, nil, nil, 2)
-local timerNextDeafeningRoar		= mod:NewNextTimer(30, 64189, nil, nil, nil, 2)
+local timerNextDeafeningRoar		= mod:NewNextTimer(50, 64189, nil, nil, nil, 2)
 local timerAchieve					= mod:NewAchievementTimer(420, 3012)
 
 mod:AddBoolOption("ShowSaraHealth", false)
@@ -290,7 +290,7 @@ function mod:OnSync(msg)
 		timerEmpower:Start()
 		warnP3:Show()
 		warnEmpowerSoon:Schedule(40)
-		timerNextDeafeningRoar:Start(30)
+		timerNextDeafeningRoar:Start(50)
 		warnDeafeningRoarSoon:Schedule(25)
 	end
 end
