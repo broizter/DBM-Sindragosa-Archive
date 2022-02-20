@@ -32,7 +32,7 @@ local specWarnAnimus			= mod:NewSpecialWarningSwitch(63145, nil, nil, nil, 1, 2)
 
 local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 62661)
-local timerSearingFlamesCD		= mod:NewCDTimer(15, 62661, nil, "HasInterrupt", nil, 2)
+local timerSearingFlamesCD		= mod:NewCDTimer(8, 62661, nil, "HasInterrupt", nil, 2)
 local timerSurgeofDarkness		= mod:NewBuffActiveTimer(10, 62662, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerNextSurgeofDarkness	= mod:NewCDTimer(61.7, 62662, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerSaroniteVapors		= mod:NewNextCountTimer(30, 63322, nil, nil, nil, 5)
@@ -100,7 +100,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnSearingFlames:Show(args.sourceName, kickCount)
 		specWarnSearingFlames:Play("kick"..kickCount.."r")
 		timerSearingFlamesCast:Start()
-		timerSearingFlamesCD:Start()
+		if self:IsDifficulty("normal10") then
+			timerSearingFlamesCD:Start(15)
+		else
+			timerSearingFlamesCD:Start()
+		end
 	elseif spellId == 62662 then
 		local tanking, status = UnitDetailedThreatSituation("player", "boss1")
 		if tanking or (status == 3) then--Player is current target
