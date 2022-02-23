@@ -152,8 +152,8 @@ function mod:SPELL_DAMAGE(_, _, _, destGUID, destName, _, spellId)
 		end
 	elseif (spellId == 63982 or spellId == 63783) and self:AntiSpam(2, 3) then
 		timerNextShockwave:Start()
-	elseif args:IsSpellID(64003, 63356) then
-		timerNextSmash:Start()
+--[[	elseif (spellId == 64003 or spellId == 63356) and self:AntiSpam(2, 4) then
+		timerNextSmash:Start() ]]--
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
