@@ -35,16 +35,16 @@ This is just my version of fixed timers for the Sindragosa server with a focus o
 
 **With no remnants of old DBM files we are now ready to start the installation process.**
 
-1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Sindragosa/archive/refs/heads/main.zip).
-2. Inside the zip file, open DBM-Sindragosa-main. Copy/Paste all those folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons). DO NOT put the DBM-Sindragosa-main folder directly into the addon folder, it will not work.
+1. Download the latest release from GitHub (https://github.com/broizter/DBM-Sindragosa/releases/latest/download/DBM-Sindragosa.zip).
+2. Open the zip file and copy/Paste all folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons).
 3. Load your game client into your character selection screen. On the bottom left corner, click AddOns and enable all the DBM entries like so:
 ![image](https://user-images.githubusercontent.com/10605951/127546459-1dd1eb99-8360-40c2-9ffa-093e365cd01b.png)
 ![image](https://user-images.githubusercontent.com/10605951/127546757-e086103a-34bd-48c5-8555-a734031e1ecc.png)
 
 # HOW TO KEEP THE ADDON UPDATED
 Updating DBM follows the standard procedure that applies to any addon installation. Everytime there are new changes*, do these steps:
-1. Download the addon from the **main** repository (https://github.com/broizter/DBM-Sindragosa/archive/refs/heads/main.zip).
-2. Inside the zip file, open DBM-Sindragosa-main. Select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
+1. Download the latest release from GitHub (https://github.com/broizter/DBM-Sindragosa/releases/latest/download/DBM-Sindragosa.zip).
+2. Open the zip file and select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
 3. (**Advisable**) On your addons folder (Interface/Addons), before pasting, select the DBM folders that are there and delete them (you will not lose your profiles doing this, don't worry - those are on WTF folder and there is no need to touch that anymore). This ensures that there is no remnant file that could potentially conflict with latest releases.
 4. On your addons folder (Interface/Addons), Paste (Ctrl+V) the previously copied folders here. DO NOT put the DBM-Sindragosa-main folder directly into the addon folder, it will not work.
 
