@@ -59,8 +59,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerNextFlameVents:Stop()
 		timerPursued:Stop()
 		warnNextPursueSoon:Cancel()
-		timerPursued:Start()
-		warnNextPursueSoon:Schedule(25)
+		timerPursued:Start(20)
+		warnNextPursueSoon:Schedule(15)
 		if mod:IsDifficulty("normal10") then
 			timerNextFlameVents:Start(40)
 		else
