@@ -57,6 +57,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 62475 then	-- Systems Shutdown / Overload
 		timerSystemOverload:Start()
 		timerNextFlameVents:Stop()
+		timerPursued:Stop()
+		warnNextPursueSoon:Cancel()
+		timerPursued:Start()
+		warnNextPursueSoon:Schedule(25)
 		if mod:IsDifficulty("normal10") then
 			timerNextFlameVents:Start(40)
 		else
