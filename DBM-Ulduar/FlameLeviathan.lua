@@ -38,11 +38,13 @@ end
 
 function mod:OnCombatStart(delay)
 	buildGuidTable(self)
-	if self:IsDifficulty("normal10") then
-		timerNextFlameVents:Start(20)
-	else
-		timerNextFlameVents:Start(20)
-	end
+	timerNextFlameVents:Start()
+	self:Schedule(20, FlameVents, self)
+end
+
+local function FlameVents(self)	-- Flames
+	timerNextFlameVents:Start()
+	self:Schedule(20, FlameVents, self)
 end
 
 function mod:OnTimerRecovery()
@@ -53,7 +55,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 62396 then		-- Flame Vents
 		timerFlameVents:Start()
-		timerNextFlameVents:Start()
 	elseif spellId == 62475 then	-- Systems Shutdown / Overload
 		timerSystemOverload:Start()
 		timerNextFlameVents:Stop()
@@ -61,11 +62,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnNextPursueSoon:Cancel()
 		timerPursued:Start(20)
 		warnNextPursueSoon:Schedule(15)
-		if mod:IsDifficulty("normal10") then
-			timerNextFlameVents:Start(40)
-		else
-			timerNextFlameVents:Start(50)
-		end
 		warnSystemOverload:Show()
 	elseif spellId == 62374 then	-- Pursued
 		local target = guids[args.destGUID]
