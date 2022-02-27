@@ -26,7 +26,7 @@ local specWarnBitingCold	= mod:NewSpecialWarningMove(62188, nil, nil, nil, 1, 2)
 local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 61968, nil, nil, nil, 2)
 local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
-local timerFlashFrCD		= mod:NewCDTimer(56, 61968, nil, nil, nil, 2)
+local timerFlashFrCD		= mod:NewCDTimer(60, 61968, nil, nil, nil, 2)
 local timerAchieve			= mod:NewAchievementTimer(119, 3182)
 
 mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
@@ -36,11 +36,7 @@ mod.vb.stormCloudIcon = 8
 function mod:OnCombatStart(delay)
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	if self:IsDifficulty("normal10") then
-		timerFlashFrCD:Start(60-delay)
-	else
-		timerFlashFrCD:Start(-delay)
-	end
+	timerFlashFrCD:Start(-delay)
 	self.vb.stormCloudIcon = 8
 end
 
@@ -49,7 +45,7 @@ function mod:SPELL_CAST_START(args)
 		timerFlashFreeze:Start()
 		specWarnFlashFreeze:Show()
 		specWarnFlashFreeze:Play("findshelter")
-		timerFlashFrCD:Start(60)
+		timerFlashFrCD:Start()
 	end
 end
 
