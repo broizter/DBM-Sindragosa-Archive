@@ -160,6 +160,7 @@ function mod:SPELL_AURA_REMOVED(args)
     if args.spellId == 62519 then
 		warnPhase2:Show()
 		self:SetStage(2)
+		timerAlliesOfNature:Stop()
 		timerNextBombs:Start(15)
 		specWarnBombs:Cancel()
 		specWarnBombs:Schedule(15)
