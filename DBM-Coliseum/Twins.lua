@@ -55,9 +55,9 @@ function mod:OnCombatStart(delay)
 	warnSpecial:Schedule(40-delay)
 	timerAchieve:Start(-delay)
 	if self:IsHeroic() then
-		enrageTimer:Start(360-delay)
+		enrageTimer:Start(-delay)
 	else
-		enrageTimer:Start(480-delay)
+		enrageTimer:Start(600-delay)
 	end
 	self.vb.debuffIcon = 8
 end

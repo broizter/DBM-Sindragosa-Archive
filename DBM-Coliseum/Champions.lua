@@ -124,9 +124,9 @@ local specWarnBloodlust 	= mod:NewSpecialWarningDispel(65980, "MagicDispeller", 
 local specWarnHeroism 		= mod:NewSpecialWarningDispel(65983, "MagicDispeller", nil, nil, 1, 2)
 
 local timerBladestorm		= mod:NewBuffActiveTimer(8, 65947, nil, nil, nil, 2)
-local timerShadowstepCD		= mod:NewCDTimer(30, 66178, nil, nil, nil, 3)
+local timerShadowstepCD		= mod:NewCDTimer(20, 66178, nil, nil, nil, 3)
 local timerBlindCD			= mod:NewCDTimer(120, 65960)
-local timerDeathgripCD		= mod:NewCDTimer(35, 66017, nil, nil, nil, 3)
+local timerDeathgripCD		= mod:NewCDTimer(20, 66017, nil, nil, nil, 3)
 local timerBladestormCD		= mod:NewCDTimer(90, 65947, nil, nil, nil, 2)
 local timerFrostTrapCD		= mod:NewCDTimer(30, 65880)
 local timerDisengageCD		= mod:NewCDTimer(30, 65869)
@@ -143,11 +143,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	-- Death Knight
 	if args:IsSpellID(66017, 68753, 68754, 68755) and args:IsDestTypePlayer() then	-- Death Grip
 		warnDeathgrip:Show(args.destName)
-		if self:IsDifficulty("heroic25") then
-			timerShadowstepCD:Start(20)
-		else
-			timerShadowstepCD:Start()
-		end
+		timerDeathgripCD:Start()
 	elseif args.spellId == 66020 and args:IsDestTypePlayer() then 	-- Chains of Ice
 		warnChainsofIce:Show(args.destName)
 	-- Paladin
@@ -223,11 +219,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	-- Rogue
 	elseif args:IsSpellID(66178, 68759, 68760, 68761) then			-- Shadowstep
 		warnShadowstep:Show()
-		if self:IsDifficulty("heroic25") then
-			timerShadowstepCD:Start(20)
-		else
-			timerShadowstepCD:Start()
-		end
+		timerShadowstepCD:Start()
 	elseif args.spellId == 65960 then								-- Blind
 		warnBlind:Show(args.destName)
 		timerBlindCD:Start()
