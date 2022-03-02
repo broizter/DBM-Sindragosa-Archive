@@ -36,13 +36,13 @@ local function buildGuidTable(self)
 	end
 end
 
-function mod:OnCombatStart(delay)
-	buildGuidTable(self)
+local function FlameVents(self)	-- Flames
 	timerNextFlameVents:Start()
 	self:Schedule(20, FlameVents, self)
 end
 
-local function FlameVents(self)	-- Flames
+function mod:OnCombatStart(delay)
+	buildGuidTable(self)
 	timerNextFlameVents:Start()
 	self:Schedule(20, FlameVents, self)
 end
@@ -53,9 +53,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 62396 then		-- Flame Vents
-		timerFlameVents:Start()
-	elseif spellId == 62475 then	-- Systems Shutdown / Overload
+	if spellId == 62475 then	-- Systems Shutdown / Overload
 		timerSystemOverload:Start()
 		timerNextFlameVents:Stop()
 		timerPursued:Stop()
