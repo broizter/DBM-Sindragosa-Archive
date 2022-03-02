@@ -37,6 +37,7 @@ local function buildGuidTable(self)
 end
 
 local function FlameVents(self)	-- Flames
+	timerFlameVents:Start()
 	timerNextFlameVents:Start()
 	self:Schedule(20, FlameVents, self)
 end
