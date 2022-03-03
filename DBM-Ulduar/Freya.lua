@@ -11,7 +11,7 @@ mod:SetUsedIcons(4, 5, 6, 7, 8)
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 62437 62859",
 	"SPELL_CAST_SUCCESS 62678 62673 62619 63571 62589 64650 64587 63601",
-	"SPELL_AURA_APPLIED 62283 62438 62439 62861 62862 62930 62451 62865",
+	"SPELL_AURA_APPLIED 62283 62438 62439 62861 62862 62930 62451 62865 62211",
 	"SPELL_AURA_REMOVED 62519 62861 62438 63571 62589",
 	"UNIT_DIED",
 	"CHAT_MSG_MONSTER_YELL",
@@ -44,10 +44,10 @@ local timerEnrage 			= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewNextTimer(60, 62678, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--No longer has CD, they spawn instant last set is dead, and not a second sooner, except first set
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill", nil, nil, nil, 5, DBM_CORE_L.DAMAGE_ICON)
 local timerFury				= mod:NewTargetTimer(10, 63571)
-local timerTremorCD 		= mod:NewCDTimer(26, 62859, 62859, nil, nil, nil, 2)--22.9-47.8
+local timerTremorCD 		= mod:NewCDTimer(26, 62859, nil, nil, nil, 2)--22.9-47.8
 local timerLifebinderCD		= mod:NewCDTimer(41, 62584, nil, nil, nil, 1)
 local timerRootsCD			= mod:NewCDTimer(40, 62439, nil, nil, nil, 3)
-local timerUnstableBeamCD	= mod:NewCDTimer(20, 62451) -- Hard mode Sun Beam
+local timerUnstableBeamCD	= mod:NewCDTimer(40, 62451) -- Hard mode Sun Beam
 local timerNextBombs		= mod:NewNextTimer(11, 64587)
 
 mod:AddSetIconOption("SetIconOnFury", 63571, false, false, {7, 8})
@@ -58,6 +58,7 @@ local adds = {}
 mod.vb.altIcon = true
 mod.vb.iconId = 6
 mod.vb.waves = 0
+local lastBeam = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.altIcon = true
@@ -67,7 +68,10 @@ function mod:OnCombatStart(delay)
 	timerEnrage:Start()
 	table.wipe(adds)
 	timerAlliesOfNature:Start(10-delay)
-	timerLifebinderCD:Start(30)
+	timerLifebinderCD:Start(30-delay)
+	timerTremorCD:Start(35-delay)
+	timerRootsCD:Start(20-delay)
+	timerUnstableBeamCD:Start(-delay)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -144,15 +148,13 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, self.vb.iconId, 15)
 		end
 		timerRootsCD:Start()
-	elseif args:IsSpellID(62451, 62865) then
-		if self:AntiSpam(10, 2) then
-			timerUnstableBeamCD:Start()
-			warnUnstableBeamSoon:Schedule(15)
-		end
-		if args:IsPlayer() then
-			specWarnUnstableBeam:Show()
-			specWarnUnstableBeam:Play("runaway")
-		end
+	elseif args:IsSpellID(62211) and args.sourceName == "Sun Beam" and GetTime() - lastBeam > 20 then
+		lastBeam = GetTime()
+		timerUnstableBeamCD:Start()
+		warnUnstableBeamSoon:Schedule(37)
+	elseif args:IsSpellID(62451, 62865) and args:IsPlayer() then
+		specWarnUnstableBeam:Show()
+		specWarnUnstableBeam:Play("runaway")
 	end
 end
 
