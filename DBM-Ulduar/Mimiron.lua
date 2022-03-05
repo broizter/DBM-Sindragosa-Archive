@@ -317,6 +317,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:SetWipeTime(20)
 	elseif msg == L.YellHardPull or msg:find(L.YellHardPull) then -- register HARDMODE
 		timerEnrage:Stop()
+		timerP1:Stop()
 		self.vb.hardmode = true
 		self:SetWipeTime(35)
 		timerHardmode:Start()
