@@ -43,7 +43,7 @@ local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(64596, nil, nil, nil, 2,
 
 local timerCombatStart			= mod:NewCombatTimer(8)
 local enrageTimer				= mod:NewBerserkTimer(300)
-local timerNextBigBang			= mod:NewNextTimer(75, 64584, nil, nil, nil, 2)
+local timerNextBigBang			= mod:NewNextTimer(90, 64584, nil, nil, nil, 2)
 local timerBigBangCast			= mod:NewCastTimer(8, 64584, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
 local timerNextCollapsingStar	= mod:NewTimer(60, "NextCollapsingStar", "Interface\\Icons\\INV_Enchant_EssenceCosmicGreater", nil, nil, 2, DBM_CORE_L.HEALER_ICON)
 local timerCDCosmicSmash		= mod:NewCDTimer(25.5, 64596, nil, nil, nil, 3)
@@ -60,13 +60,11 @@ end
 function mod:startTimers()
 	if mod:IsDifficulty("normal10") then
 		enrageTimer:Start(360)
-		timerNextBigBang:Start(90)
-		announcePreBigBang:Schedule(80)
 	else
 		enrageTimer:Start()
-		timerNextBigBang:Start(65)
-		announcePreBigBang:Schedule(55)
 	end
+	timerNextBigBang:Start()
+	announcePreBigBang:Schedule(80)
 	timerCDCosmicSmash:Start(25)
 	timerNextCollapsingStar:Start(16.5)
 	timerNextPhasePunch:Start()
@@ -75,13 +73,8 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(64584, 64443) then 	-- Big Bang
 		timerBigBangCast:Start()
-		if mod:IsDifficulty("normal10") then
-			timerNextBigBang:Start(90)
-			announcePreBigBang:Schedule(80)
-		else
-			timerNextBigBang:Start()
-			announcePreBigBang:Schedule(65)
-		end
+		timerNextBigBang:Start()
+		announcePreBigBang:Schedule(80)
 		specWarnBigBang:Show()
 		if self:IsTank() then
 			specWarnBigBang:Play("defensive")
