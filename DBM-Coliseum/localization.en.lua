@@ -9,18 +9,18 @@ L:SetGeneralLocalization({
 	name = "Northrend Beasts"
 })
 
-L:SetWarningLocalization({
-	WarningSnobold		= "Snobold Vassal spawned on >%s<"
-})
-
 L:SetTimerLocalization({
 	TimerNextBoss		= "Next boss",
 	TimerEmerge			= "Emerge",
 	TimerSubmerge		= "Submerge"
 })
 
+L:SetWarningLocalization{
+	WarningSnobold				= "Snobold Vassal spawned"
+}
+
 L:SetOptionLocalization({
-	WarningSnobold		= "Show warning for Snobold Vassal spawns",
+	WarningSnobold				= "Show warning for Snobold Vassal spawns",
 	PingCharge			= "Ping the minimap when Icehowl is about to charge you",
 	ClearIconsOnIceHowl	= "Clear all icons before charge",
 	TimerNextBoss		= "Show timer for next boss spawn",

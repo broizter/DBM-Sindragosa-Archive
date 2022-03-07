@@ -34,10 +34,10 @@ local timerNextImpale		= mod:NewNextTimer(9.5, 66331, nil, "Tank|Healer", nil, 5
 local timerRisingAngerCD    = mod:NewCDTimer(20, 66636, nil, nil, nil, 1)
 -- Acidmaw & Dreadscale
 local warnSlimePool			= mod:NewSpellAnnounce(66883, 2, nil, "Melee")
-local warnToxin				= mod:NewSpecialWarningMoveTo(66823, nil, nil, nil, 1, 2)
+local warnToxin				= mod:NewTargetAnnounce(66823, nil, nil, nil, 1, 2)
 local warnBile				= mod:NewTargetAnnounce(66869, 3)
 local warnEnrageWorm		= mod:NewSpellAnnounce(68335, 3)
-local specWarnToxin			= mod:NewSpecialWarningMove(67620)
+local specWarnToxin			= mod:NewSpecialWarningMoveTo(66823, nil, nil, nil, 1, 2)
 local specWarnBile			= mod:NewSpecialWarningYou(66869, nil, nil, nil, 1, 2)
 local timerSubmergeCD		= mod:NewTimer(45, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6) -- 45-50 sec.
 local timerEmerge			= mod:NewTimer(8.5, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)
@@ -56,7 +56,7 @@ local specWarnCharge		= mod:NewSpecialWarningRun(52311, nil, nil, nil, 4, 2)
 local specWarnChargeNear	= mod:NewSpecialWarningClose(52311, nil, nil, nil, 3, 2)
 local specWarnTranq			= mod:NewSpecialWarningDispel(66759, "RemoveEnrage", nil, nil, 1, 2)
 local enrageTimer			= mod:NewBerserkTimer(150)
-local timerBreath			= mod:NewCastTimer(5, 66689, nil, nil, nil, 3)--3 or 5? is it random target or tank?
+local timerBreath			= mod:NewCastTimer(3.2, 66689, nil, nil, nil, 3)--3 or 5? is it random target or tank?
 local timerStaggeredDaze	= mod:NewBuffActiveTimer(15, 66758, nil, nil, nil, 5, nil, DBM_CORE_L.DAMAGE_ICON)
 local timerNextCrashCD		= mod:NewCDTimer(30, 66683, nil, nil, nil, 2, nil, DBM_CORE_L.MYTHIC_ICON)
 local timerArcticBreathCD	= mod:NewCDTimer(20, 66689) -- 14 sec. after pull, 20-30 sec. every next
@@ -76,6 +76,7 @@ mod:AddBoolOption("IcehowlArrow")
 mod:AddBoolOption("YellOnCharge", true, "announce")
 
 local bileTargets			= {}
+local bileName 				= DBM:GetSpellInfo(66869)
 local toxinTargets			= {}
 local burnIcon				= 8
 local phases				= {}
@@ -193,7 +194,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	-- Gormok the Impaler
 	if args:IsSpellID(67477, 66331, 67478, 67479) then		-- Impale
 		timerNextImpale:Start()
-		warnImpaleOn:Show(args.destName)
+		warnImpaleOn:Show(args.destName, 1)
 	elseif args:IsSpellID(66636) then						-- Rising Anger
 		WarningSnobold:Show()
 		timerRisingAngerCD:Start()
@@ -208,8 +209,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:UnscheduleMethod("warnToxin")
 		toxinTargets[#toxinTargets + 1] = args.destName
 		if args:IsPlayer() then
-			specWarnToxin:Show()
---			specWarnToxin:Play("targetyou") bugged? needs research
+			specWarnToxin:Show(bileName)
+			specWarnToxin:Play("targetyou")
 		end
 		mod:ScheduleMethod(0.2, "warnToxin")
 	elseif args:IsSpellID(66869) then						-- Burning Bile
@@ -227,9 +228,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	-- Icehowl
 	elseif args:IsSpellID(67657, 66759, 67658, 67659) then	-- Frothing Rage
 		warnRage:Show()
-		timerWhirlCD:Start(2)--todo
-		timerArcticBreathCD:Start(5) --todo
-		timerNextCrashCD:Start(30) --todo
+		timerWhirlCD:Start(17)--todo 17
+		timerArcticBreathCD:Start(20) --todo  20
+		timerNextCrashCD:Start(45) --todo 45
 		if not self:IsDifficulty("heroic10", "heroic25") then
 			specWarnTranq:Show()
 			specWarnTranq:Play("trannow")
@@ -249,7 +250,7 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpellID(67477, 66331, 67478, 67479) then		-- Impale
 		timerNextImpale:Start()
-		warnImpaleOn:Show(args.destName)
+		warnImpaleOn:Show(args.destName, args.amount)
 		if (args.amount >= 3 and not self:IsDifficulty("heroic10", "heroic25") ) or ( args.amount >= 2 and self:IsDifficulty("heroic10", "heroic25") ) then 
 			if args:IsPlayer() then
 				specWarnImpale3:Show(args.amount)
@@ -258,9 +259,8 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		end
 	elseif args:IsSpellID(66636) then						-- Rising Anger
 		WarningSnobold:Show()
-		if args.amount <= 3 then
-			timerRisingAngerCD:Start()
-		elseif args.amount >= 3 then
+		timerRisingAngerCD:Start()
+		if args.amount >= 3 then
 			specWarnAnger3:Show(args.amount)
 			specWarnAnger3:Play("stackhigh")
 		end
@@ -373,7 +373,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			--local timeLeftFromP1 = 154 - timerNextBoss:GetTime()
 			timerNextBoss:Stop()
 			--timerNextBoss:Start(174 + timeLeftFromP1)
-			timerNextBoss:Start(178)
+			timerNextBoss:Start(218)
 		end
 		updateHealthFrame(2)
 		self:ScheduleMethod(15, "WormsEmerge")
