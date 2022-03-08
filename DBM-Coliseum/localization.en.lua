@@ -28,6 +28,10 @@ L:SetOptionLocalization({
 	TimerEmerge			= "Show timer for emerge",
 	TimerSubmerge		= "Show timer for submerge",
 	SpecialWarningAnger3		= "Show special warning for Rising Anger (>=3 stacks)",
+	YellOnCharge				= "Yell on Icehowl charge",
+	SetIconOnChargeTarget		= "Set icons on charge targets (skull)",
+	SetIconOnBileTarget			= "Set icons on Burning Bile targets",
+	RangeFrame                  = "Show range frame in Phase 2",
 	IcehowlArrow		= "Show DBM arrow when Icehowl is about to charge near you"
 })
 
