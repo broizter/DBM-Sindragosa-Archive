@@ -29,6 +29,7 @@ local warnFlesh					= mod:NewTargetAnnounce(66237, 4, nil, "Healer")
 local specWarnFlame				= mod:NewSpecialWarningRun(66877, nil, nil, 2, 4, 2)
 local specWarnFlameGTFO			= mod:NewSpecialWarningMove(66877, nil, nil, 2, 4, 2)
 local specWarnFlesh				= mod:NewSpecialWarningYou(66237, nil, nil, nil, 1, 2)
+local specWarnTouch				= mod:NewSpecialWarningYou(66209, nil, nil, nil, 1, 2)
 local specWarnKiss				= mod:NewSpecialWarningCast(66334, "SpellCaster", nil, 2, 1, 2)
 local specWarnNetherPower		= mod:NewSpecialWarningDispel(67009, "MagicDispeller", nil, nil, 1, 2)
 local specWarnFelInferno		= mod:NewSpecialWarningMove(66496, nil, nil, nil, 1, 2)
@@ -39,6 +40,7 @@ local timerCombatStart			= mod:NewCombatTimer(71)--roleplay for first pull
 local enrageTimer				= mod:NewBerserkTimer(600)
 local timerFlame 				= mod:NewTargetTimer(8, 66197, nil, nil, nil, 3) -- There are 8 debuff Ids. Since we detect first to warn, use an 8sec timer to cover duration of trigger spell and damage debuff.
 local timerFlameCD				= mod:NewCDTimer(30, 66197, nil, nil, nil, 3) 		-- Every 30 sec
+local timerTouchCD				= mod:NewCDTimer(10, 66209, nil, nil, nil, 3)
 local timerNetherPowerCD		= mod:NewCDTimer(25, 67009, nil, "MagicDispeller", nil, 5, nil, DBM_CORE_L.MAGIC_ICON) 		-- Every 25-45 sec
 local timerFlesh				= mod:NewTargetTimer(12, 66237, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerFleshCD				= mod:NewCDTimer(20, 66237, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON) 		-- Every 20-25 sec
@@ -72,6 +74,9 @@ function mod:OnCombatStart(delay)
 	timerFelFireballCD:Start(5)
 	timerFelLightningCD:Start()
 	enrageTimer:Start(-delay)
+	if self:IsDifficulty("heroic10", "heroic25") then
+		timerTouchCD:Start()
+	end
 end
 
 function mod:OnCombatEnd()
@@ -174,6 +179,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(66532, 66963, 66964, 66965) then	-- Fel Fireball (announce if tank gets debuff for dispel)
 		SpecWarnFelFireballDispel:Show(args.destName)
 		SpecWarnFelFireballDispel:Play("helpdispel")
+	elseif args:IsSpellID(66209) then
+		specWarnTouch:Show()
+		specWarnTouch:Play("targetyou")
 	end
 end
 
@@ -199,6 +207,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnFlame:Show(args.destName)
 	elseif args:IsSpellID(66528, 67029, 67030, 67031) then 	-- Fel Lightning
 		timerFelLightningCD:Start()
+	elseif args:IsSpellID(66209) then		-- Touch of Jaraxxus
+		timerTouchCD:Start()
 	elseif args:IsSpellID(66228, 67107, 67106, 67108) then	-- Nether Power
 		timerNetherPowerCD:Start()
 		specWarnNetherPower:Show()
@@ -220,6 +230,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 		if timerFelLightningCD:GetRemaining() > 0 then
 			timerFelLightningCD:AddTime(5)
+		end
+		if timerTouchCD:GetRemaining() > 0 then
+			timerTouchCD:AddTime(5)
 		end
 	end
 end
