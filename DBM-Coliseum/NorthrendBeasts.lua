@@ -25,7 +25,7 @@ local warnImpaleOn			= mod:NewStackAnnounce(66331, 2, nil, "Tank|Healer")
 local warnFireBomb			= mod:NewSpellAnnounce(66317, 3, nil, false)
 local WarningSnobold		= mod:NewAnnounce("WarningSnobold", 4)
 local specWarnImpale3		= mod:NewSpecialWarningStack(66331, nil, 3, nil, nil, 1, 6)
-local specWarnAnger3		= mod:NewSpecialWarningStack(66636, "Tank|Healer", 3, nil, nil, 1, 6)
+local specWarnAnger3		= mod:NewSpecialWarning("SpecialWarningAnger3", "Tank|Healer", nil, nil, 1, 2)
 local specWarnSilence		= mod:NewSpecialWarningSpell(66330, "SpellCaster", nil, nil, 1, 2)
 local timerDisarm			= mod:NewBuffActiveTimer(10, 65935, nil, false)
 local timerDismantle		= mod:NewBuffActiveTimer(10, 51722, nil, false)
@@ -135,7 +135,7 @@ end
 
 function mod:GromokStartTimers()
 	if self:IsDifficulty("heroic10", "heroic25") then
-		timerNextBoss:Start(165)
+		timerNextBoss:Start(139)
 	end
 	timerNextStompCD:Start(5)
 	specWarnSilence:Schedule(3) 
@@ -373,7 +373,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			--local timeLeftFromP1 = 154 - timerNextBoss:GetTime()
 			timerNextBoss:Stop()
 			--timerNextBoss:Start(174 + timeLeftFromP1)
-			timerNextBoss:Start(218)
+			timerNextBoss:Start(190)
 		end
 		updateHealthFrame(2)
 		self:ScheduleMethod(15, "WormsEmerge")

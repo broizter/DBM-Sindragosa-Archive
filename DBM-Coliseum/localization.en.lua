@@ -16,6 +16,7 @@ L:SetTimerLocalization({
 })
 
 L:SetWarningLocalization{
+	SpecialWarningAnger3		= "Rising Anger >%d<",
 	WarningSnobold				= "Snobold Vassal spawned"
 }
 
@@ -26,6 +27,7 @@ L:SetOptionLocalization({
 	TimerNextBoss		= "Show timer for next boss spawn",
 	TimerEmerge			= "Show timer for emerge",
 	TimerSubmerge		= "Show timer for submerge",
+	SpecialWarningAnger3		= "Show special warning for Rising Anger (>=3 stacks)",
 	IcehowlArrow		= "Show DBM arrow when Icehowl is about to charge near you"
 })
 
