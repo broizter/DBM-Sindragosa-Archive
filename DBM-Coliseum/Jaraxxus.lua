@@ -195,7 +195,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(66532, 66963, 66964, 66965) then	-- Fel Fireball (track cast for interupt, only when targeted)
 		if UnitName("target") == L.name then
-			SpecWarnFelFireball:Show()
+			SpecWarnFelFireball:Show(args.sourceName)
 			SpecWarnFelFireball:Play("kickcast")
 		end
 		timerFelFireballCD:Start()
