@@ -14,6 +14,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_DAMAGE",
 	"SPELL_MISSED",
+	"CHAT_MSG_MONSTER_YELL",
 	"UNIT_DIED"
 )
 
@@ -138,6 +139,7 @@ local timerHoPCD 			= mod:NewCDTimer(300, 66009)
 local timerSilenceCD		= mod:NewCDTimer(45, 65542)
 local timerHeroismCD		= mod:NewCDTimer(300, 65983)
 local timerBloodlustCD		= mod:NewCDTimer(300, 65980)
+local timerSpawnTimer		= mod:NewTimer(33, "TimerSpawnTimer", 47436, nil, nil, 6)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	-- Death Knight
@@ -352,5 +354,11 @@ function mod:UNIT_DIED(args)
 	elseif cid == 34474 or cid == 34450 then -- Warlock
 		DBM.BossHealth:RemoveBoss(34474)
 		DBM.BossHealth:RemoveBoss(34450)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L.SpawnTimer or msg:find(L.SpawnTimer) then
+		timerSpawnTimer:Start()
 	end
 end

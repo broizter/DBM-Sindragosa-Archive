@@ -112,6 +112,14 @@ L:SetGeneralLocalization({
 	name = champions
 })
 
+L:SetTimerLocalization({
+	TimerSpawnTimer	= "Champions spawn"
+})
+
+L:SetOptionLocalization({
+	TimerSpawnTimer			= "Show timer until champions spawn"
+})
+
 L:SetMiscLocalization({
 	--Horde NPCs
 	Gorgrim				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:32:64:64:96|t Gorgrim Shadowcleave",		-- 34458
@@ -144,6 +152,7 @@ L:SetMiscLocalization({
 	Serissa				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:95:126.5:32:64|t Serissa Grimdabbler",		-- 34474
 	Shocuul				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:0:32|t Shocuul",						-- 34475
 
+	SpawnTimer	   = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	AllianceVictory    = "GLORY TO THE ALLIANCE!",
 	HordeVictory       = "That was just a taste of what the future brings. FOR THE HORDE!"
 	--YellKill           = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
