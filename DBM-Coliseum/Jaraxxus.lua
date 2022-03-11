@@ -179,7 +179,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(66532, 66963, 66964, 66965) then	-- Fel Fireball (announce if tank gets debuff for dispel)
 		SpecWarnFelFireballDispel:Show(args.destName)
 		SpecWarnFelFireballDispel:Play("helpdispel")
-	elseif args:IsSpellID(66209) then
+	elseif args:IsSpellID(66209) and args:IsPlayer() then
 		specWarnTouch:Show()
 		specWarnTouch:Play("targetyou")
 	end
