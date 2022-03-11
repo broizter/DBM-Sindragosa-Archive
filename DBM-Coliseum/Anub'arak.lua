@@ -20,7 +20,6 @@ mod:RegisterEvents(
 
 local warnAdds				= mod:NewAnnounce("warnAdds", 3, 45419)
 local preWarnShadowStrike	= mod:NewSoonAnnounce(66134, 3)
-local warnShadowStrike		= mod:NewSpellAnnounce(66134, 4)
 local warnPursue			= mod:NewTargetAnnounce(67574, 4)
 local warnFreezingSlash		= mod:NewTargetAnnounce(66012, 2, nil, "Tank|Healer")
 local warnHoP				= mod:NewTargetAnnounce(10278, 2, nil, false) --Heroic strat revolves around kiting pursue and using Hand of Protection.
@@ -200,11 +199,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 66134 and self:AntiSpam(2, 1) then	-- Shadow Strike
 		self:UnscheduleMethod("ShadowStrike")
 		self:ShadowStrike()
-		if self.Options.SpecWarn66134spell then
-			specWarnShadowStrike:Show()
-		else
-			warnShadowStrike:Show()
-		end
+		specWarnShadowStrike:Show()
 	end
 end
 
