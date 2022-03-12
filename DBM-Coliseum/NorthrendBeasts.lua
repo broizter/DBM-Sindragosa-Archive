@@ -62,7 +62,7 @@ local timerNextCrashCD		= mod:NewCDTimer(30, 66683, nil, nil, nil, 2, nil, DBM_C
 local timerArcticBreathCD	= mod:NewCDTimer(20, 66689) -- 14 sec. after pull, 20-30 sec. every next
 local timerWhirlCD			= mod:NewCDTimer(20, 67665) -- 10-12 sec. after pull, 15-20 sec. every next
 
-
+local timerPrePot		= mod:NewTimer(36, "TimerPrePot", 53909, nil, nil, 1)
 local timerCombatStart		= mod:NewCombatTimer(11)
 local timerNextBoss			= mod:NewTimer(178, "TimerNextBoss", 2457, nil, nil, 1)
 local specWarnGTFO			= mod:NewSpecialWarningGTFO(66317, nil, nil, nil, 1, 2)
@@ -367,7 +367,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.Phase2 or msg:find(L.Phase2) then -- Acidmaw & Dreadscale
+	if msg == L.PrePot or msg:find(L.PrePot) then -- Prepot
+		timerPrePot:Start()
+	elseif msg == L.Phase2 or msg:find(L.Phase2) then -- Acidmaw & Dreadscale
 		timerCombatStart:Start(15)
 		if self:IsDifficulty("heroic10", "heroic25") then
 			--local timeLeftFromP1 = 154 - timerNextBoss:GetTime()

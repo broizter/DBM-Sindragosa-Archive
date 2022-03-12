@@ -10,6 +10,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
+	TimerPrePot		= "Prepot",
 	TimerNextBoss		= "Next boss",
 	TimerEmerge			= "Emerge",
 	TimerSubmerge		= "Submerge"
@@ -21,6 +22,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization({
+	TimerPrePot				= "Show prepot timer on first pull",
 	WarningSnobold				= "Show warning for Snobold Vassal spawns",
 	PingCharge			= "Ping the minimap when Icehowl is about to charge you",
 	ClearIconsOnIceHowl	= "Clear all icons before charge",
@@ -36,6 +38,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
+	PrePot				= "Welcome, champions! You have heard the call of the Argent Crusade and you have boldly answered! It is here, in the Crusaders' Coliseum, that you will face your greatest challenges. Those of you who survive the rigors of the coliseum will join the Argent Crusade on its march to Icecrown Citadel.",
 	Charge				= "^%%s glares at (%S+) and lets out",
 	CombatStart			= "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
 	Phase2				= "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
