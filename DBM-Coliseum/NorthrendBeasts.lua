@@ -242,7 +242,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerWhirlCD:Start(17)--todo 17
 		timerArcticBreathCD:Start(20) --todo  20
 		timerNextCrashCD:Start(45) --todo 45
-	elseif args:IsSpellID(66689, 67650, 67651, 67652) then	-- Arctic Breath
+	elseif args:IsSpellID(66689, 67650, 67651, 67652) and self:AntiSpam(2, 1) then	-- Arctic Breath
 		timerArcticBreathCD:Start()
 		timerBreath:Start()
 		warnBreath:Show()
