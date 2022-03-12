@@ -51,7 +51,6 @@ local timerFelLightningCD		= mod:NewCDTimer(10, 66528, nil, nil, nil, 1) 	-- Eve
 
 
 mod:AddBoolOption("LegionFlameWhisper", false, "announce")
-mod:AddBoolOption("LegionFlameRunSound", true)
 mod:AddBoolOption("LegionFlameIcon", true)
 mod:AddBoolOption("IncinerateFleshIcon", true)
 
