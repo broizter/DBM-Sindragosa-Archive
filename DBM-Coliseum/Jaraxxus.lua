@@ -73,7 +73,7 @@ function mod:OnCombatStart(delay)
 	timerFelFireballCD:Start(5)
 	timerFelLightningCD:Start()
 	enrageTimer:Start(-delay)
-	if self:IsDifficulty("heroic10", "heroic25") then
+	if mod:IsDifficulty("heroic25") then
 		timerTouchCD:Start()
 	end
 end
