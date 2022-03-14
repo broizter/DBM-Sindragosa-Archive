@@ -162,7 +162,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerFlameCD:Start()		
 		if args:IsPlayer() then
 			specWarnFlame:Show()
-			specWarnFlame:Play("runout")
+			specWarnFlame:Play("firerun")
 			specWarnFlame:ScheduleVoice(1.5, "keepmove")
 		end		
 		if self.Options.LegionFlameIcon then
@@ -179,7 +179,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		SpecWarnFelFireballDispel:Play("helpdispel")
 	elseif args:IsSpellID(66209) and args:IsPlayer() then
 		specWarnTouch:Show()
-		specWarnTouch:Play("targetyou")
+		specWarnTouch:Play("runout")
 	end
 end
 
