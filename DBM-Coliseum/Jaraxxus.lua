@@ -209,7 +209,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerTouchCD:Start()
 	elseif args:IsSpellID(66228, 67107, 67106, 67108) then	-- Nether Power
 		timerNetherPowerCD:Start()
-		specWarnNetherPower:Show()
+		specWarnNetherPower:Show(args.sourceName)
 		specWarnNetherPower:Play("dispelboss")
 		if timerPortalCD:GetRemaining() > 0 then
 			timerPortalCD:AddTime(5)
