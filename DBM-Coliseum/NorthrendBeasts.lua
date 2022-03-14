@@ -324,7 +324,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 			self:ClearIcons()
 		end
 		if target == UnitName("player") then
-			specWarnCharge:Show(target)
+			specWarnCharge:Show()
 			specWarnCharge:Play("justrun")
 			if self.Options.YellOnCharge then
 				SendChatMessage("Charge on me!","SAY")
@@ -342,7 +342,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 					x, y = GetPlayerMapPosition(uId)
 				end
 				if inRange then
-					specWarnChargeNear:Show()
+					specWarnChargeNear:Show(target)
 					specWarnChargeNear:Play("runaway")
 					if self.Options.IcehowlArrow then
 						DBM.Arrow:ShowRunAway(x, y, 12, 5)
