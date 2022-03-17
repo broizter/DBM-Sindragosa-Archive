@@ -61,6 +61,7 @@ local timerStaggeredDaze	= mod:NewBuffActiveTimer(15, 66758, nil, nil, nil, 5, n
 local timerNextCrashCD		= mod:NewCDTimer(30, 66683, nil, nil, nil, 2, nil, DBM_CORE_L.MYTHIC_ICON)
 local timerArcticBreathCD	= mod:NewCDTimer(20, 66689) -- 14 sec. after pull, 20-30 sec. every next
 local timerWhirlCD			= mod:NewCDTimer(20, 67665) -- 10-12 sec. after pull, 15-20 sec. every next
+local timerIcehowlSpawn		= mod:NewTimer(329, "TimerIcehowlSpawn", 3130, nil, nil, 1)
 
 local timerPrePot		= mod:NewTimer(36, "TimerPrePot", 53909, nil, nil, 1)
 local timerCombatStart		= mod:NewCombatTimer(11)
@@ -140,7 +141,8 @@ function mod:GromokStartTimers()
 	timerNextStompCD:Start(5)
 	specWarnSilence:Schedule(3) 
 	specWarnSilence:ScheduleVoice(3, "silencesoon")
-	timerRisingAngerCD:Start(16) 
+	timerRisingAngerCD:Start(16)
+	timerIcehowlSpawn:Start()
 end
 
 function mod:WormsEmerge()
@@ -380,7 +382,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			DBM.RangeCheck:Show(10)
 		end
 	elseif msg == L.Phase3 or msg:find(L.Phase3) then --Icehowl
-		timerNextBoss:Cancel()
+		timerIcehowlSpawn:Cancel()
 		timerSubmergeCD:Cancel()
 		timerCombatStart:Start(13)
 		mod:ScheduleMethod(13, "IcehowlStartTimers")

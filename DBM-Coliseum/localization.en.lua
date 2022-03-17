@@ -10,6 +10,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetTimerLocalization({
+	TimerIcehowlSpawn	= "Icehowl spawns",
 	TimerPrePot		= "Prepot",
 	TimerNextBoss		= "Next boss",
 	TimerEmerge			= "Emerge",
@@ -23,6 +24,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization({
 	TimerPrePot				= "Show prepot timer on first pull",
+	TimerIcehowlSpawn			= "Show timer for when Icehowl spawns",
 	WarningSnobold				= "Show warning for Snobold Vassal spawns",
 	PingCharge			= "Ping the minimap when Icehowl is about to charge you",
 	ClearIconsOnIceHowl	= "Clear all icons before charge",
