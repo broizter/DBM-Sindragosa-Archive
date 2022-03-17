@@ -230,8 +230,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	-- Icehowl
 	elseif args:IsSpellID(67657, 66759, 67658, 67659) then	-- Frothing Rage
 		warnRage:Show()
-		timerWhirlCD:Start(17)--todo 17
-		timerArcticBreathCD:Start(20) --todo  20
+		timerWhirlCD:Start(22)--todo 17
+		timerArcticBreathCD:Start(29) --todo  20
 		timerNextCrashCD:Start(45) --todo 45
 		if not self:IsDifficulty("heroic10", "heroic25") then
 			specWarnTranq:Show()
@@ -239,8 +239,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(66758) then						-- Staggered Daze
 		timerStaggeredDaze:Start()
-		timerWhirlCD:Start(17)--todo 17
-		timerArcticBreathCD:Start(20) --todo  20
+		timerWhirlCD:Start(22)--todo 17
+		timerArcticBreathCD:Start(29) --todo  20
 		timerNextCrashCD:Start(45) --todo 45
 	elseif args:IsSpellID(66689, 67650, 67651, 67652) and self:AntiSpam(2, 1) then	-- Arctic Breath
 		timerArcticBreathCD:Start()
