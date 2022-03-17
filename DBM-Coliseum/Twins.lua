@@ -45,6 +45,7 @@ mod:AddBoolOption("SpecialWarnOnDebuff", false, "announce")
 mod:AddBoolOption("SetIconOnDebuffTarget", false)
 mod:AddInfoFrameOption(67258, true)
 mod:AddBoolOption("HealthFrame", false)
+mod:AddBoolOption("RangeFrame", true)
 
 local lightEssence, darkEssence = DBM:GetSpellInfo(65686), DBM:GetSpellInfo(65684)
 local debuffTargets					= {}
@@ -60,11 +61,17 @@ function mod:OnCombatStart(delay)
 		enrageTimer:Start(600-delay)
 	end
 	self.vb.debuffIcon = 8
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Show(3)
+	end
 end
 
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
+	end
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
 	end
 end
 

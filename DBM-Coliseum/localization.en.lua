@@ -195,6 +195,7 @@ L:SetMiscLocalization({
 })
 
 L:SetOptionLocalization({
+	RangeFrame                  = "Show range frame for easier stacking",
 	TimerSpecialSpell			= "Show timer for next special ability",
 	TimerAnubRoleplay			= "Show roleplay timer for Lich King breaking the floor",
 	WarnSpecialSpellSoon		= "Show pre-warning for next special ability",
