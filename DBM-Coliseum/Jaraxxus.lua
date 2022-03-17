@@ -53,6 +53,7 @@ local timerFelLightningCD		= mod:NewCDTimer(10, 66528, nil, nil, nil, 1) 	-- Eve
 mod:AddBoolOption("LegionFlameWhisper", false, "announce")
 mod:AddBoolOption("LegionFlameIcon", true)
 mod:AddBoolOption("IncinerateFleshIcon", true)
+mod:AddBoolOption("YellOnTouch", true, "announce")
 
 mod:RemoveOption("HealthFrame")
 mod:AddBoolOption("IncinerateShieldFrame", true, "misc")
@@ -180,6 +181,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(66209) and args:IsPlayer() then
 		specWarnTouch:Show()
 		specWarnTouch:Play("runout")
+		if self.Options.YellOnTouch then
+			SendChatMessage("Touch on me!","SAY")
+		end
 	end
 end
 
