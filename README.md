@@ -44,11 +44,10 @@ This is just my version of fixed timers for the Sindragosa server with a focus o
 # HOW TO KEEP THE ADDON UPDATED
 Updating DBM follows the standard procedure that applies to any addon installation. Everytime there are new changes*, do these steps:
 1. Download the latest release from GitHub (https://github.com/broizter/DBM-Sindragosa/releases/latest/download/DBM-Sindragosa.zip).
-2. Open the zip file and select all the folders (DBM-Core, DBM-GUI, etc) and press Copy (Ctrl+C).
-3. (**Advisable**) On your addons folder (Interface/Addons), before pasting, select the DBM folders that are there and delete them (you will not lose your profiles doing this, don't worry - those are on WTF folder and there is no need to touch that anymore). This ensures that there is no remnant file that could potentially conflict with latest releases.
-4. On your addons folder (Interface/Addons), Paste (Ctrl+V) the previously copied folders here. DO NOT put the DBM-Sindragosa-main folder directly into the addon folder, it will not work.
+2. (**Advisable**) On your addons folder (Interface/Addons), before pasting, select the DBM folders that are there and delete them (you will not lose your profiles doing this, don't worry - those are on WTF folder and there is no need to touch that anymore). This ensures that there is no remnant file that could potentially conflict with latest releases.
+3. Open the zip file and copy/Paste all folders (DBM-Core, DBM-GUI, etc) into your addons folder (Interface/Addons).
 
-*To know when there are changes, you can Star/Watch this repository on GitHub (this requires a GitHub account) to receive notifications.
+*To know when there are changes, you can join our [Discord](https://discord.gg/kmwQydTSC4) or Star/Watch this repository on GitHub (this requires a GitHub account) to receive notifications.
 
 # QUICK START
 To open the options window, type `/dbm` into your chat and hit enter or use the minimap icon. For more commands, type `/dbm help`.
