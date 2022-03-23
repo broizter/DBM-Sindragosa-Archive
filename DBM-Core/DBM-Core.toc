@@ -15,7 +15,7 @@
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## Author: Barsoom, Bunny67, Zidras, broizter, DBM-Frostmourne contributors, original DBM team
-## Version: 9.07
+## Version: 9.08
 ## X-Website: https://github.com/broizter/DBM-Sindragosa
 
 compat.lua

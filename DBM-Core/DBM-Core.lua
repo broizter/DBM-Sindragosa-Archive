@@ -89,10 +89,10 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = ("$Revision: 90070 $"):sub(12, -3), -- From broizter: Added extra decimal because I messed up in a earlier release.
-	Version = "9.07",
-	DisplayVersion = "9.07 DBM-Sindragosa by broizter", -- the string that is shown as version
-	ReleaseRevision = 90070 -- the revision of the latest stable version that is available (for /dbm ver2).
+	Revision = ("$Revision: 90080 $"):sub(12, -3), -- From broizter: Added extra decimal because I messed up in a earlier release.
+	Version = "9.08",
+	DisplayVersion = "9.08 DBM-Sindragosa by broizter", -- the string that is shown as version
+	ReleaseRevision = 90080 -- the revision of the latest stable version that is available (for /dbm ver2).
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
