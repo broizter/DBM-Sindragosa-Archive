@@ -164,7 +164,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnFlame:Show()
 			specWarnFlame:Play("firerun")
-			specWarnFlame:ScheduleVoice(1.5, "keepmove")
 		end		
 		if self.Options.LegionFlameIcon then
 			self:SetIcon(args.destName, 7, 8)
