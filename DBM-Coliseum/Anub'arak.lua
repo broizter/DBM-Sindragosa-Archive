@@ -216,7 +216,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg) -- Warmane workaround since submerge emo
 		timerAdds:Cancel()
 		warnAdds:Cancel()
 		warnSubmerge:Show()
-		warnEmergeSoon:Schedule(53.5)
+		warnEmergeSoon:Schedule(50)
 		timerEmerge:Start()
 		timerFreezingSlash:Stop()
 		self:UnscheduleMethod("ShadowStrike")
