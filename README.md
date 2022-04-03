@@ -9,6 +9,9 @@
   
 </div>
 
+
+# This addon is no longer maintained so timers for ICC and onwards are not accurate.
+
 Core addon backport from retail by Barsoomx: (https://github.com/Barsoomx/DBM-wowcircle).  
 Many fixes done by Zidras which this version is forked from: (https://github.com/Zidras/DBM-Warmane).  
 Sindragosa T7 fixes done by ForestJ316: (https://github.com/ForestJ316/DBM-Warmane-SindragosaEdit)
